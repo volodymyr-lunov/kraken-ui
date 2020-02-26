@@ -1,0 +1,96 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+header {
+  background: #4267b2;
+  justify-content: space-between;
+}
+
+footer {
+  padding: 5px;
+  background: #ddd;
+  color: #4e4e4e;
+  text-align: center;
+}
+
+.error-msg{
+  color: red;
+}
+
+.flex-container {
+  display: flex;
+}
+
+.flex-item {
+  text-align: center;
+  margin: 3px;
+}
+
+.content {
+  width: 100%;
+  min-height: 600px;
+}
+
+.side-panel{
+  background: #f6f3f3;
+  width: 300px;
+}
+
+/* buttons */
+.btn{
+  background: white;
+  border: none;
+  padding: 10px;
+  font-weight: bold;
+  outline: none;
+}
+
+.btn:hover{
+  background: #ececec;
+  cursor: pointer;
+}
+
+.blue-btn{
+  background: #385898;
+  color: white;
+}
+
+.blue-btn:hover{
+  background: #384b8b;
+}
+
+/* top menu */
+.top-menu li {
+  display: inline-block;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.top-menu li:hover{
+  background: #385898;
+  cursor: pointer;
+}
+
+.top-menu li a {
+  text-decoration: none;
+  color: white;
+}
+
+/* post */
+.post-item {
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  padding: 5px;
+}
+
+/* spinner */
+.spinner {
+  background: url('/spinner.gif') no-repeat;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+}

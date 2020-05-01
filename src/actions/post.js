@@ -1,6 +1,5 @@
 import * as constants from '../constants';
-import {httpTransport} from '../services/utils';
-import {whenMapDispatchToPropsIsMissing} from "react-redux/es/connect/mapDispatchToProps";
+import {API} from 'aws-amplify';
 
 export const loadingPost = (isLoading) => ({
   type: constants.POST_LOADING,
@@ -28,7 +27,7 @@ export const getOnePost = (id) => (dispatch, getStore) => {
 
   dispatch(loadingPost(true));
 
-  return httpTransport().get(`/posts/${id}`)
+  return API.get('api', `/posts/${id}`)
     .then((res) => {
       if (res.status !== 200) {
         throw Error(res.statusText);

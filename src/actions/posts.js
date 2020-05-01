@@ -1,5 +1,5 @@
 import * as constants from '../constants';
-import {httpTransport} from '../services/utils';
+import {API} from 'aws-amplify';
 
 export const loadingPosts = (isLoading) => ({
   type: constants.POSTS_LOADING,
@@ -25,15 +25,9 @@ export const getAllPosts = (limit=10, startFromId) => (dispatch) => {
     params['startFromId'] = startFromId;
   }
 
-  return httpTransport().get(`/posts?${new URLSearchParams(params)}`)
-    .then((res) => {
-      if (res.status !== 200) {
-        throw Error(res.statusText);
-      }
-
+  return API.get('api', `/posts?${new URLSearchParams(params)}`)
+    .then(({posts}) => {
       dispatch(loadingPosts(false));
-
-      const {posts} = res.data;
 
       return {
         items: posts.Items,

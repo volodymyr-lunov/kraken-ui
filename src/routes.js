@@ -2,6 +2,7 @@ import Contacts from './components/Contacts';
 import About from './components/About';
 import Home from './containers/Home';
 import PostPage from './containers/PostPage';
+import LoginPage from './containers/LoginPage';
 
 /**
  * @typedef {Object} Route
@@ -14,9 +15,10 @@ import PostPage from './containers/PostPage';
  * */
 const routes = [
   {path: '/home',         label: 'Home',     handler: Home},
-  {path: '/post/:postId', label: 'PostPage', handler: PostPage, hidden: true},
+  {path: '/post/:postId', label: 'PostPage', handler: PostPage,     hidden: true},
   {path: '/contacts',     label: 'Contacts', handler: Contacts},
-  {path: '/about',        label: 'About',    handler: About, forAuthOnly: true}
+  {path: '/about',        label: 'About',    handler: About,        forAuthOnly: true},
+  {path: '/login',        label: 'Login',    handler: LoginPage,    hidden: true}
 ];
 
 export default routes;

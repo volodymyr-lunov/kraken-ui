@@ -49,6 +49,10 @@ footer {
   outline: none;
 }
 
+.btn:disabled, .btn:disabled:hover{
+  background: #b6b0b0;
+}
+
 .btn:hover{
   background: #ececec;
   cursor: pointer;
@@ -93,4 +97,19 @@ footer {
   width: 200px;
   height: 200px;
   margin: auto;
+}
+
+/* from items */
+.form-group label {
+  display: block;
+}
+
+.form-group input[type=text],
+.form-group input[type=password] {
+  padding: 5px;
+  border: 1px solid #bbb;
+} 
+
+.form-group .error {
+  color: red;
 }

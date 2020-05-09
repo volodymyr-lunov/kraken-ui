@@ -1,8 +1,10 @@
 import Contacts from './components/Contacts';
 import About from './components/About';
+import SignIn from './components/SignIn';
+
 import Home from './containers/Home';
 import PostPage from './containers/PostPage';
-import LoginPage from './containers/LoginPage';
+import SignOut from './components/SignOut';
 
 /**
  * @typedef {Object} Route
@@ -18,7 +20,8 @@ const routes = [
   {path: '/post/:postId', label: 'PostPage', handler: PostPage,     hidden: true},
   {path: '/contacts',     label: 'Contacts', handler: Contacts},
   {path: '/about',        label: 'About',    handler: About,        forAuthOnly: true},
-  {path: '/login',        label: 'Login',    handler: LoginPage,    hidden: true}
+  {path: '/Signin',       label: 'SignIn',   handler: SignIn,       hidden: true},
+  {path: '/Signout',      label: 'SignOut',  handler: SignOut,      hidden: true}
 ];
 
 export default routes;

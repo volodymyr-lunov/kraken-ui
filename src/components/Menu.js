@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link as RouterLink} from 'react-router-dom';
-import {connect} from 'react-redux';
 import routes from '../routes';
+import {useAppContext} from '../lib/context';
 
 /**
  * @param {Boolean} isUserLogin
@@ -24,9 +24,11 @@ const accessMiddleware = (isUserLogin, route) => {
   return true;
 };
 
-const Menu = ({user}) => {
+const Menu = () => {
+  const { isAuthenticated } = useAppContext();
+
   const links = routes
-    .filter((route) => accessMiddleware(user.isUserLogin, route))
+    .filter((route) => accessMiddleware(isAuthenticated, route))
     .map((route) => (
       <li key={route.label}>
         <RouterLink to={route.path} key={route.label}>
@@ -38,8 +40,4 @@ const Menu = ({user}) => {
   return (<ul className={'top-menu'}>{links}</ul>);
 };
 
-const mapStateToProps = (state) => ({
-  user: state.user
-});
-
-export default connect(mapStateToProps)(Menu);
+export default Menu

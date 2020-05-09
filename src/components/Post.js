@@ -1,7 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import PostPage from '../containers/PostPage';
-import {Route} from 'react-router';
 import {Link as RouterLink} from "react-router-dom";
 
 const POST_PREVIEW_CHARS = 255;

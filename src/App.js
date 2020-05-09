@@ -2,10 +2,10 @@ import React, {useState, useEffect} from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {AppContext} from './lib/context';
 import {Amplify, Auth} from 'aws-amplify';
-import Menu from './containers/Menu';
+import Menu from './components/Menu';
 import Content from './components/Content';
 import Footer from './components/Footer';
-import LoginButton from './components/LoginButton';
+import SignOptions from './components/SignOptions';
 import config from './config';
 import './App.css';
 
@@ -36,7 +36,7 @@ const App = () => {
 
   const onLoad = async () => {
     try {
-      const user = await Auth.currentSession();
+      await Auth.currentSession();
       userHasAuthenticated(true);
     } catch(err) {
       console.warn(err);
@@ -58,7 +58,7 @@ const App = () => {
             <Menu />
           </div>
           <div className={'flex-item'}>
-            <LoginButton />
+            <SignOptions />
           </div>
         </header>
 

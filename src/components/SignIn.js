@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {Auth} from 'aws-amplify';
-import Spinner from '../components/Spinner';
+import Spinner from './Spinner';
 import {useAppContext} from '../lib/context';
 import {useFormFields} from '../lib/hooks';
 
-const LoginPage = () => {
+const SignIn = () => {
   const [{email, password}, fieldsHasChanged] = useFormFields({
     email: '',
     password: ''
@@ -64,4 +64,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignIn;

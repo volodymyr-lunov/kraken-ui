@@ -1,7 +1,7 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
 import routes from '../routes';
-import PrivateRoute from '../containers/PrivateRoute';
+import PrivateRoute from './PrivateRoute';
 
 const Content = () => {
   return (

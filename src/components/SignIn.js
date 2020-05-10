@@ -6,15 +6,14 @@ import {useAppContext} from '../lib/context';
 import {useFormFields} from '../lib/hooks';
 
 const SignIn = () => {
-  const [{email, password}, fieldsHasChanged] = useFormFields({
-    email: '',
-    password: ''
-  });
-
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const history = useHistory();
   const {userHasAuthenticated} = useAppContext();
+  const [{email, password}, fieldsHasChanged] = useFormFields({
+    email: '',
+    password: ''
+  });
 
   const validateForm = () => email.length && password.length;
 
@@ -40,22 +39,10 @@ const SignIn = () => {
     <div className={'form-group'}>
       {errorMsg}
       <label>
-        <input 
-          type="text" 
-          name="email" 
-          placeholder="Email" 
-          value={email} 
-          onChange={fieldsHasChanged} 
-        />
+        <input type="text" name="email" placeholder="Email" value={email} onChange={fieldsHasChanged} />
       </label>
       <label>
-        <input 
-          type="password" 
-          name="password" 
-          placeholder="Password" 
-          value={password} 
-          onChange={fieldsHasChanged} 
-        />
+        <input type="password" name="password" placeholder="Password" value={password} onChange={fieldsHasChanged} />
       </label>
       <label>
         <button className={'btn blue-btn'} disabled={!validateForm()} onClick={submitUser}>Login</button>

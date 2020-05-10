@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 import {useAppContext} from '../lib/context';
 
@@ -9,21 +9,21 @@ const SignOptions = () => {
 
   if (isAuthenticated) {
     return Menu(
-      <li key={'Signout'}>
-        <RouterLink to={'Signout'}>SignOut</RouterLink>
+      <li key={'signout'}>
+        <RouterLink to={'signout'}>Sign Out</RouterLink>
       </li>
     );
   }
 
   return Menu(
-    <React.Fragment>
-      <li key={'Signin'}>
-        <RouterLink to="Signin">Sign In</RouterLink>
+    <Fragment>
+      <li key={'signin'}>
+        <RouterLink to="signin">Sign In</RouterLink>
       </li>
-      <li key={'Signup'}>
-        <RouterLink to="Signup">Sign Up</RouterLink>
+      <li key={'signup'}>
+        <RouterLink to="signup">Sign Up</RouterLink>
       </li>
-    </React.Fragment>
+    </Fragment>
   )
 };
 

@@ -105,7 +105,8 @@ footer {
 }
 
 .form-group input[type=text],
-.form-group input[type=password] {
+.form-group input[type=password],
+.form-group input[type=number] {
   padding: 5px;
   border: 1px solid #bbb;
 } 

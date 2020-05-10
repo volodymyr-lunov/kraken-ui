@@ -5,6 +5,7 @@ import SignIn from './components/SignIn';
 import Home from './containers/Home';
 import PostPage from './containers/PostPage';
 import SignOut from './components/SignOut';
+import SignUp from './components/SignUp';
 
 /**
  * @typedef {Object} Route
@@ -20,8 +21,9 @@ const routes = [
   {path: '/post/:postId', label: 'PostPage', handler: PostPage,     hidden: true},
   {path: '/contacts',     label: 'Contacts', handler: Contacts},
   {path: '/about',        label: 'About',    handler: About,        forAuthOnly: true},
-  {path: '/Signin',       label: 'SignIn',   handler: SignIn,       hidden: true},
-  {path: '/Signout',      label: 'SignOut',  handler: SignOut,      hidden: true}
+  {path: '/signin',       label: 'SignIn',   handler: SignIn,       hidden: true},
+  {path: '/signout',      label: 'SignOut',  handler: SignOut,      hidden: true},
+  {path: '/signup',       label: 'SignUp',   handler: SignUp,       hidden: true}
 ];
 
 export default routes;

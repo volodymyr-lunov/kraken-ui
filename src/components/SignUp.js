@@ -4,6 +4,7 @@ import {useHistory} from 'react-router-dom';
 import {useFormFields} from '../lib/hooks';
 import {useAppContext} from '../lib/context';
 import Spinner from './Spinner';
+import ErrorMsg from './ErrorMsg';
 
 const SignUp = () => {
   const history = useHistory();
@@ -71,7 +72,7 @@ const SignUp = () => {
     </div>
   );
 
-  const errorMsg = error.length ? <i className={'error'}>{error}</i> : '';
+  const errorMsg = error.length ? <ErrorMsg msg={errorMsg} /> : '';
 
   if (isLoading) {
     return <Spinner/>

@@ -1,52 +1,45 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {getOnePost} from '../actions/post';
+import React, {useEffect} from 'react';
+import {API} from 'aws-amplify';
+import {useSelector, useDispatch} from 'react-redux';
+import {loadedPost, loadingPost, loadingPostError} from '../actions/post';
 import Post from '../components/Post';
 import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
 
-class PostPage extends Component {
-  componentDidMount() {
-    const {postId} = this.props.match.params;
+const fetchPost = (id, dispatch) => {
+  dispatch(loadingPost(true))
 
-    this.props.getOnePost(postId);
-  }
-
-  render() {
-    const {
-      post: {
-        currentPost,
-        isLoading,
-        errorMsg
-      }
-    } = this.props;
-
-    if (errorMsg) {
-      return <ErrorMsg msg={errorMsg} />;
-    }
-
-    if (isLoading) {
-      return <Spinner />;
-    }
-
-    return (
-      <div>
-        <Post item={currentPost} isPreview={false} />
-      </div>
-    );
-  }
+  return API.get('api', `/posts/${id}`)
+    .then(({post}) => {
+      dispatch(loadingPost(false));
+      return post;
+    })
+    .then(post => dispatch(loadedPost(post)))
+    .catch(err => dispatch(loadingPostError(err.message)));
 }
 
-const mapStateToProps = (state) => ({
-  post: state.post
-});
+const PostPage = ({match}) => {
+  const {postId} = match.params;
+  const dispatch = useDispatch();
+  const {items} = useSelector(state => state.posts);
+  const {
+    currentPost,
+    isLoading,
+    errorMsg
+  } = useSelector(state => state.post);
 
-const mapDispatchToProps = (dispatch) => ({
-  getOnePost: (id) => dispatch(getOnePost(id))
-});
+  useEffect(() => {
+    const foundPost = items.find(post => post.id === postId);
+    foundPost 
+      ? dispatch(loadedPost(foundPost)) 
+      : fetchPost(postId, dispatch); 
+  }, []);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PostPage);
+  if (isLoading) return <Spinner />;
+  if (errorMsg) return <ErrorMsg msg={errorMsg} />;
+  if (currentPost) return <Post item={currentPost} isPreview={false} />;
+  
+  return <Spinner />;
+}
 
+export default PostPage;

@@ -4,16 +4,14 @@ import {Auth} from 'aws-amplify';
 import Spinner from './Spinner';
 import {useAppContext} from '../lib/context';
 import {useFormFields} from '../lib/hooks';
+import ErrorMsg from './ErrorMsg';
 
 const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const history = useHistory();
   const {userHasAuthenticated} = useAppContext();
-  const [{email, password}, fieldsHasChanged] = useFormFields({
-    email: '',
-    password: ''
-  });
+  const [{email, password}, fieldsHasChanged] = useFormFields({ email: '', password: '' });
 
   const validateForm = () => email.length && password.length;
 
@@ -29,7 +27,7 @@ const SignIn = () => {
       });
     };
 
-  const errorMsg = error.length ? <i className={'error'}>{error}</i> : '';
+  const errorMsg = error.length ? <ErrorMsg msg={errorMsg} /> : '';
 
   if (isLoading) {
     return <Spinner/>

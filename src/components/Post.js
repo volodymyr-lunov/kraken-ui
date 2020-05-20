@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import {Link as RouterLink} from "react-router-dom";
+import {Link as RouterLink} from 'react-router-dom';
 
 const POST_PREVIEW_CHARS = 255;
 

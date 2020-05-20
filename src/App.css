@@ -5,6 +5,10 @@
   font-family: 'Ubuntu', sans-serif;
 }
 
+ul {
+  text-align: left;
+}
+
 header {
   background: #4267b2;
   justify-content: space-between;
@@ -15,10 +19,6 @@ footer {
   background: #ddd;
   color: #4e4e4e;
   text-align: center;
-}
-
-.error-msg{
-  color: red;
 }
 
 .flex-container {
@@ -102,14 +102,24 @@ footer {
 /* from items */
 .form-group label {
   display: block;
+  text-align: left;
 }
 
 .form-group input[type=text],
 .form-group input[type=password],
-.form-group input[type=number] {
+.form-group input[type=number],
+.form-group textarea {
+  margin: 5px;
   padding: 5px;
   border: 1px solid #bbb;
-} 
+  width: 90%;
+}
+
+.form-group textarea {
+  min-width: 90%;
+  max-width: 90%;
+  height: 300px;
+}
 
 .form-group .error {
   color: red;

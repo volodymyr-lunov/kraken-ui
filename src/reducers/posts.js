@@ -29,6 +29,14 @@ const posts = (state=defaultState, action) => {
         count: action.posts.count,
         lastEvaluatedKey: action.posts.lastEvaluatedKey
       };
+
+    case constants.POST_CREATED:
+      return {
+        ...state,
+        items: [action.newPost, ...state.items],
+        lastEvaluatedKey: action.newPost.id
+      }
+
     default:
       return state;
   }

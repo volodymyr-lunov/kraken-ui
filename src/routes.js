@@ -4,7 +4,7 @@ import Home from './containers/Home';
 import PostPage from './containers/PostPage';
 import SignOut from './components/SignOut';
 import SignUp from './components/SignUp';
-import CreatePost from './containers/CreatePost';
+import CreateEditPost from './containers/CreateEditPost';
 
 /**
  * @typedef {Object} Route
@@ -16,13 +16,14 @@ import CreatePost from './containers/CreatePost';
  * @property {Boolean} hidden
  * */
 const routes = [
-  {path: '/home',         label: 'Home',          handler: Home},
-  {path: '/contacts',     label: 'Contacts',      handler: Contacts},
-  {path: '/create-post',  label: 'Create Post',   handler: CreatePost,   forAuthOnly: true},
-  {path: '/post/:postId', label: 'PostPage',      handler: PostPage,     hidden: true},
-  {path: '/signin',       label: 'SignIn',        handler: SignIn,       hidden: true},
-  {path: '/signout',      label: 'SignOut',       handler: SignOut,      hidden: true},
-  {path: '/signup',       label: 'SignUp',        handler: SignUp,       hidden: true}
+  {path: '/home',               label: 'Home',          handler: Home},
+  {path: '/contacts',           label: 'Contacts',      handler: Contacts},
+  {path: '/create-post',        label: 'Create Post',   handler: CreateEditPost,  forAuthOnly: true},
+  {path: '/edit-post/:postId',  label: 'Edit Post',     handler: CreateEditPost,  hidden: true},
+  {path: '/post/:postId',       label: 'PostPage',      handler: PostPage,        hidden: true},
+  {path: '/signin',             label: 'SignIn',        handler: SignIn,          hidden: true},
+  {path: '/signout',            label: 'SignOut',       handler: SignOut,         hidden: true},
+  {path: '/signup',             label: 'SignUp',        handler: SignUp,          hidden: true}
 ];
 
 export default routes;

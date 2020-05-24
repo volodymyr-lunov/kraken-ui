@@ -37,6 +37,16 @@ const posts = (state=defaultState, action) => {
         lastEvaluatedKey: action.newPost.id
       }
 
+    case constants.POST_UPDATED:
+      const idx = state.items.findIndex(item => item.id === action.updatedPost.id);    
+      const items = [...state.items]
+      items.splice(idx, 1, action.updatedPost);
+
+      return {
+        ...state,
+        items
+      }
+
     default:
       return state;
   }

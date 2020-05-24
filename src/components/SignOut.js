@@ -10,7 +10,9 @@ const SignOut = () => {
     Auth.signOut().then(() => userHasAuthenticated(false))
   });
 
-  return isAuthenticated ? <Spinner /> : <Redirect to={'Signin'}/>;
+  return isAuthenticated 
+    ? <Spinner /> 
+    : <Redirect to={'Signin'}/>;
 }
 
 export default SignOut;

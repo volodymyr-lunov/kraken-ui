@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {AppContext} from './lib/context';
-import {Amplify, Auth, API} from 'aws-amplify';
+import {Amplify, Auth} from 'aws-amplify';
 import Menu from './components/Menu';
 import Content from './components/Content';
 import Footer from './components/Footer';
@@ -39,13 +39,7 @@ const App = () => {
     Auth.currentSession()
       .then(() => userHasAuthenticated(true))
       .catch(err => console.warn(err))
-      .then(() => setIsAuthenting(false))
-      /*.then(() => {
-        API.get('api', '/posts')
-          .then(res => {
-            console.log(res);
-          })
-      })*/
+      .then(() => setIsAuthenting(false));
   }, []);
 
   return (

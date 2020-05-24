@@ -1,39 +1,45 @@
 import React from 'react';
 import moment from 'moment';
 import {Link as RouterLink} from 'react-router-dom';
+import {useHistory} from 'react-router';
 
-const POST_PREVIEW_CHARS = 255;
-
-const preview = (content='') => {
-  if (content.length > POST_PREVIEW_CHARS) {
-    return `${content.slice(0, POST_PREVIEW_CHARS)}...`;
-  }
-
-  return content;
-};
+const PREVIEW_CHARS = 255;
 
 const prettyDate = (date) => date ? moment(date).fromNow() : '';
+const previewCut = (content='') => content.slice(0, PREVIEW_CHARS).concat('...').slice(0, content.length);
 
-const Post = ({item={}, isPreview=false}) => {
-  const title = isPreview ?
-    <h2>
-      <RouterLink to={`post/${item.id}`}>
-        {item.title}
-      </RouterLink>
-    </h2> :
-    <h1>{item.title}</h1>;
+const Post = ({data={}, isPreview=false}) => {
+  const history = useHistory();
 
-  const content = isPreview ?
-    preview(item.body) :
-    item.body;
+  const deletePost = () => {
+    console.log(data.id)
+  }
+
+  const editPost = () => history.push(`/edit-post/${data.id}`);
+
+  const title = isPreview 
+    ? (<h2><RouterLink to={`post/${data.id}`}>{data.title}</RouterLink></h2>) 
+    : (<h1>{data.title}</h1>);
+
+  const content = isPreview
+    ? previewCut(data.body)
+    : data.body;
+
+  const actionPanel = isPreview ? '' : (
+    <div className={'action-panel'}>
+      <button className={'btn blue-btn'} onClick={editPost}>Edit</button>
+      <button className={'btn red-btn'} onClick={deletePost}>Delete</button>
+    </div>
+  );
 
   return (
-    <div key={item.id} className={'post-item'}>
+    <div key={data.id} className={'post-item'}>
       {title}
+      {actionPanel}
       <p>{content}</p>
-      <i>{prettyDate(item.createdDate)}</i>
+      <i className={'date'}>{prettyDate(data.createdDate)}</i>
     </div>
-    );
-};
+  )
+}
 
 export default Post;

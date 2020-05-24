@@ -49,7 +49,7 @@ const Home = () => {
     if (!items.length) {
       fetchPosts({}, dispatch)
     }
-  }, []);
+  }, []); // eslint-disable-line
   
   if (isLoading) return <Spinner />;
   if (errorMsg) return <ErrorMsg msg={errorMsg} />;
@@ -61,7 +61,7 @@ const Home = () => {
   return (
     <Fragment>
       <div className={'posts-list'}>
-        {items.map(post => (<Post item={post} isPreview={true} key={post.id} />))}
+        {items.map(post => (<Post data={post} isPreview={true} key={post.id} />))}
       </div>
       {mayBeLoadMore && loadMoreBtn}
     </Fragment>

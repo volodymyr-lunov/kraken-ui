@@ -8,10 +8,11 @@ import ErrorMsg from './ErrorMsg';
 
 const SignUp = () => {
   const history = useHistory();
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [newUser, setNewUser] = useState(null);
   const {userHasAuthenticated} = useAppContext();
   const [error, setError] = useState('');
+  const errorMsg = error.length ? <ErrorMsg msg={error} /> : '';
   const [{email, password, confirmPassword, confirmationCode}, fieldsHasChanged] = useFormFields({
     email: '', 
     password: '', 
@@ -23,23 +24,26 @@ const SignUp = () => {
   const validateConfirmForm = () => confirmationCode > 0;
 
   const submitUser = () => {
-    setIsLoading(true);
+    setLoading(true);
     Auth.signUp({ username: email, password })
       .then(newUser => setNewUser(newUser))
-      .catch(err => setError(err.message))
-      .then(() => setIsLoading(false));
+      .catch(({response}) => setError(response.data.message))
+      .then(() => setLoading(false));
   };
 
   const confirmRegistration = () => {
-    setIsLoading(true);
+    setLoading(true);
     Auth.confirmSignUp(email, confirmationCode)
       .then(() => Auth.signIn(email, password))
       .then(() => {
-        setIsLoading(false);
+        setLoading(false);
         userHasAuthenticated(true);
         history.push('home');
       })
-      .catch(err => setError(err.message));
+      .catch(err => {
+        setLoading(false);
+        setError(err.message);
+      });
   };
 
   const registerForm = () => (
@@ -72,13 +76,11 @@ const SignUp = () => {
     </div>
   );
 
-  const errorMsg = error.length ? <ErrorMsg msg={errorMsg} /> : '';
+  if (loading) return <Spinner/>
 
-  if (isLoading) {
-    return <Spinner/>
-  }
-
-  return newUser ? confirmForm() : registerForm();
+  return newUser 
+    ? confirmForm() 
+    : registerForm();
 }
 
 export default SignUp;

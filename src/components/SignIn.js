@@ -7,31 +7,28 @@ import {useFormFields} from '../lib/hooks';
 import ErrorMsg from './ErrorMsg';
 
 const SignIn = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const history = useHistory();
   const {userHasAuthenticated} = useAppContext();
   const [{email, password}, fieldsHasChanged] = useFormFields({ email: '', password: '' });
+  const errorMsg = error.length ? <ErrorMsg msg={error} /> : '';
 
   const validateForm = () => email.length && password.length;
 
   const submitUser = async () => {
-    setIsLoading(true);
+    setLoading(true);
 
     Auth.signIn(email, password)
       .then(() => userHasAuthenticated(true))
-      .catch(err => setError(err.message))
+      .catch(({response}) => setError(response.data.message))
       .then(() => {
-        setIsLoading(false);
+        setLoading(false);
         history.push('home');
       });
     };
 
-  const errorMsg = error.length ? <ErrorMsg msg={errorMsg} /> : '';
-
-  if (isLoading) {
-    return <Spinner/>
-  }
+  if (loading) return <Spinner/>
 
   return (
     <div className={'form-group'}>

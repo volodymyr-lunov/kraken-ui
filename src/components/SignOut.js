@@ -12,7 +12,7 @@ const SignOut = () => {
 
   return isAuthenticated 
     ? <Spinner /> 
-    : <Redirect to={'Signin'}/>;
+    : <Redirect to={'/signin'}/>;
 }
 
 export default SignOut;

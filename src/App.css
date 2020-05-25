@@ -86,7 +86,6 @@ footer {
 /* top menu */
 .top-menu li {
   display: inline-block;
-  padding: 10px;
   font-weight: bold;
 }
 
@@ -98,6 +97,8 @@ footer {
 .top-menu li a {
   text-decoration: none;
   color: white;
+  display: inline-block;
+  padding: 10px;
 }
 
 /* post */
@@ -108,7 +109,7 @@ footer {
 }
 
 .post-item .date {
-  color: #4e4e4e;
+  color: #7a31bc;
 }
 
 /* action-panel */

@@ -24,7 +24,7 @@ const SignIn = () => {
       .catch(({response}) => setError(response.data.message))
       .then(() => {
         setLoading(false);
-        history.push('home');
+        history.push('/home');
       });
     };
 

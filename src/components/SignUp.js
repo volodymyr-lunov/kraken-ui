@@ -38,7 +38,7 @@ const SignUp = () => {
       .then(() => {
         setLoading(false);
         userHasAuthenticated(true);
-        history.push('home');
+        history.push('/home');
       })
       .catch(err => {
         setLoading(false);

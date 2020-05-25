@@ -34,7 +34,7 @@ const Post = ({data={}, isPreview=false}) => {
       {title}
       {actionPanel}
       <p>{content}</p>
-      <i className={'date'}>{prettyDate(data.createdDate)}</i>
+      <i className={'date'}>{prettyDate(data.updatedDate || data.createdDate)}</i>
     </div>
   )
 }

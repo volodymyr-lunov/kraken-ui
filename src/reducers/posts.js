@@ -10,7 +10,7 @@ const defaultState = {
 
 const posts = (state = defaultState, action) => {
   let idx, items;
-
+  
   switch (action.type) {
     case constants.POSTS_LOADING:
       return {
@@ -52,7 +52,7 @@ const posts = (state = defaultState, action) => {
     case constants.POST_DELETED:
       idx = state.items.findIndex(item => item.id === action.id);    
       items = [...state.items];
-      items.splice(idx, idx - 1);
+      items.splice(idx, 1);
 
       return {
         ...state,

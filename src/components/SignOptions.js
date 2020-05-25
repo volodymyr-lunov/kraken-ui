@@ -10,7 +10,7 @@ const SignOptions = () => {
   if (isAuthenticated) {
     return Menu(
       <li key={'signout'}>
-        <RouterLink to={'signout'}>Sign Out</RouterLink>
+        <RouterLink to={'/signout'}>Sign Out</RouterLink>
       </li>
     );
   }
@@ -18,10 +18,10 @@ const SignOptions = () => {
   return Menu(
     <Fragment>
       <li key={'signin'}>
-        <RouterLink to="signin">Sign In</RouterLink>
+        <RouterLink to="/signin">Sign In</RouterLink>
       </li>
       <li key={'signup'}>
-        <RouterLink to="signup">Sign Up</RouterLink>
+        <RouterLink to="/signup">Sign Up</RouterLink>
       </li>
     </Fragment>
   )

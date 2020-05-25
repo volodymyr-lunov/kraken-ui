@@ -15,7 +15,7 @@ const DeletePost = () => {
 
   const deletePost = () => {
     setLoading(true);
-    return API.del('api', `/posts/${postId}`)
+    return API.del('api', `/posts/${postId}`, {response: false})
       .then(({post}) => {
         dispatch(deletedPost(postId))
         history.push('/home');

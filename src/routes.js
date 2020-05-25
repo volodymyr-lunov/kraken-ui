@@ -5,25 +5,18 @@ import PostPage from './containers/PostPage';
 import SignOut from './components/SignOut';
 import SignUp from './components/SignUp';
 import CreateEditPost from './containers/CreateEditPost';
+import DeletePost from './containers/DeletePost';
 
-/**
- * @typedef {Object} Route
- * @property {String} path
- * @property {String} label
- * @property {Function} handler
- * @property {Boolean} forAuthOnly
- * @property {Boolean} hideIfAuth
- * @property {Boolean} hidden
- * */
 const routes = [
-  {path: '/home',               label: 'Home',          handler: Home},
-  {path: '/contacts',           label: 'Contacts',      handler: Contacts},
-  {path: '/create-post',        label: 'Create Post',   handler: CreateEditPost,  forAuthOnly: true},
-  {path: '/edit-post/:postId',  label: 'Edit Post',     handler: CreateEditPost,  hidden: true},
-  {path: '/post/:postId',       label: 'PostPage',      handler: PostPage,        hidden: true},
-  {path: '/signin',             label: 'SignIn',        handler: SignIn,          hidden: true},
-  {path: '/signout',            label: 'SignOut',       handler: SignOut,         hidden: true},
-  {path: '/signup',             label: 'SignUp',        handler: SignUp,          hidden: true}
+  {path: '/home',                 label: 'Home',          handler: Home},
+  {path: '/contacts',             label: 'Contacts',      handler: Contacts},
+  {path: '/create-post',          label: 'Create Post',   handler: CreateEditPost,  forAuthOnly: true},
+  {path: '/edit-post/:postId',    label: 'Edit Post',     handler: CreateEditPost,  hidden: true},
+  {path: '/delete-post/:postId',  label: 'Delete Post',   handler: DeletePost,      hidden: true},
+  {path: '/post/:postId',         label: 'PostPage',      handler: PostPage,        hidden: true},
+  {path: '/signin',               label: 'SignIn',        handler: SignIn,          hidden: true},
+  {path: '/signout',              label: 'SignOut',       handler: SignOut,         hidden: true},
+  {path: '/signup',               label: 'SignUp',        handler: SignUp,          hidden: true}
 ];
 
 export default routes;

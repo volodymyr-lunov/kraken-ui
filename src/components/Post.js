@@ -11,10 +11,7 @@ const previewCut = (content='') => content.slice(0, PREVIEW_CHARS).concat('...')
 const Post = ({data={}, isPreview=false}) => {
   const history = useHistory();
 
-  const deletePost = () => {
-    console.log(data.id)
-  }
-
+  const deletePost = () => history.push(`/delete-post/${data.id}`);
   const editPost = () => history.push(`/edit-post/${data.id}`);
 
   const title = isPreview 

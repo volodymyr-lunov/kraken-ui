@@ -8,7 +8,9 @@ const defaultState = {
   errorMsg: false
 };
 
-const posts = (state=defaultState, action) => {
+const posts = (state = defaultState, action) => {
+  let idx, items;
+
   switch (action.type) {
     case constants.POSTS_LOADING:
       return {
@@ -38,9 +40,19 @@ const posts = (state=defaultState, action) => {
       }
 
     case constants.POST_UPDATED:
-      const idx = state.items.findIndex(item => item.id === action.updatedPost.id);    
-      const items = [...state.items]
+      idx = state.items.findIndex(item => item.id === action.updatedPost.id);    
+      items = [...state.items];
       items.splice(idx, 1, action.updatedPost);
+
+      return {
+        ...state,
+        items
+      }
+
+    case constants.POST_DELETED:
+      idx = state.items.findIndex(item => item.id === action.id);    
+      items = [...state.items];
+      items.splice(idx, idx - 1);
 
       return {
         ...state,

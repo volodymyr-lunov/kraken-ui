@@ -18,6 +18,7 @@ const CreateEditPost = () => {
   const errorMsg = error.length ? <ErrorMsg msg={error} /> : '';
 
   const validateForm = () => post.title.length && post.body.length;
+  const submitForm = () => editMode ? updatePost() : createPost();
 
   const fetchPost = () => {
     setLoading(true);
@@ -73,10 +74,6 @@ const CreateEditPost = () => {
 
   if (loading) return <Spinner />;
 
-  const button = editMode 
-    ? <button className={'btn blue-btn'} disabled={!validateForm()} onClick={updatePost}>Update</button>
-    : <button className={'btn blue-btn'} disabled={!validateForm()} onClick={createPost}>Create</button>;
-
   return (
     <div className={'form-group'}>
       {errorMsg}
@@ -96,7 +93,7 @@ const CreateEditPost = () => {
           onChange={({target: {value}}) => setPost({...post, body: value})}></textarea>
       </label>
       <label>
-        {button}
+        <button className={'btn blue-btn'} disabled={!validateForm()} onClick={submitForm}>Save</button>
       </label>
     </div>
   );

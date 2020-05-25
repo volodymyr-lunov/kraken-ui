@@ -42,7 +42,8 @@ footer {
 
 /* buttons */
 .btn{
-  background: white;
+  background: #c8c8c8;
+  color: white;
   border: none;
   padding: 10px;
   font-weight: bold;
@@ -60,7 +61,6 @@ footer {
 
 .blue-btn{
   background: #385898;
-  color: white;
 }
 
 .blue-btn:hover{
@@ -69,11 +69,18 @@ footer {
 
 .red-btn{
   background: #983838;
-  color: white;
 }
 
 .red-btn:hover{
   background: #833131;
+}
+
+.green-btn{
+  background: #14a538;
+}
+
+.green-btn:hover{
+  background: #128f31;
 }
 
 /* top menu */

@@ -1,14 +1,15 @@
 import React from 'react';
-import {Route, Redirect} from 'react-router';
+import {Route, Redirect, useLocation} from 'react-router';
 import {useAppContext} from '../lib/context'
 
 const PrivateRoute = ({component: Component, ...rest}) => {
   const {isAuthenticated} = useAppContext();
-  
+  const {pathname, search} = useLocation();
+
   return (<Route {...rest} render={(props) => {
     return isAuthenticated
       ? <Component {...props} />
-      : <Redirect to='/home' />;
+      : <Redirect to={`/signin?redirect=${pathname}${search}`} />;
   }}/>)
 };
 

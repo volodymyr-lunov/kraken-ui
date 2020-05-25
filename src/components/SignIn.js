@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import {Auth} from 'aws-amplify';
 import Spinner from './Spinner';
 import {useAppContext} from '../lib/context';
@@ -10,11 +10,14 @@ const SignIn = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const history = useHistory();
+  const {search} = useLocation();
   const {userHasAuthenticated} = useAppContext();
   const [{email, password}, fieldsHasChanged] = useFormFields({ email: '', password: '' });
   const errorMsg = error.length ? <ErrorMsg msg={error} /> : '';
 
   const validateForm = () => email.length && password.length;
+
+  const getBackUrl = () => search.length ? search.match(/redirect=(.*)/)[1] : '/home';
 
   const submitUser = async () => {
     setLoading(true);
@@ -24,7 +27,7 @@ const SignIn = () => {
       .catch(({response}) => setError(response.data.message))
       .then(() => {
         setLoading(false);
-        history.push('/home');
+        history.push(getBackUrl());
       });
     };
 

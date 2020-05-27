@@ -12,18 +12,6 @@ const posts = (state = defaultState, action) => {
   let idx, items;
   
   switch (action.type) {
-    case constants.POSTS_LOADING:
-      return {
-        ...state,
-        isLoading: action.isLoading
-      };
-
-    case constants.POSTS_LOADING_ERROR:
-      return {
-        ...state,
-        errorMsg: action.errorMsg
-      };
-
     case constants.POSTS_LOADED:
       return {
         ...state,

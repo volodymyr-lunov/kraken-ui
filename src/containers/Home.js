@@ -1,58 +1,46 @@
-import React, {useEffect, Fragment} from 'react';
+import React, {useEffect, Fragment, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {API} from 'aws-amplify';
-import {loadedPosts, loadingPosts, loadingPostsError} from '../actions/posts';
+import {loadedPosts} from '../actions/posts';
 import Post from '../components/Post';
 import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
 
-const fetchPosts = ({limit=10, startFromId}, dispatch) => {
-  dispatch(loadingPosts(true)); 
-
-  const params = {limit};
-
-  if (startFromId) {
-    params['startFromId'] = startFromId;
-  }
-
-  return API.get('api', `/posts?${new URLSearchParams(params)}`)
-    .then(({posts}) => {
-      dispatch(loadingPosts(false));
-
-      return {
-        items: posts.Items,
-        count: posts.Count,
-        lastEvaluatedKey: posts.LastEvaluatedKey
-      };
-    })
-    .then((posts) => dispatch(loadedPosts(posts)))
-    .catch((err) => dispatch(loadingPostsError(err.message)));
-};
-
 const Home = () => {
   const {
-    isLoading,
     items,
-    lastEvaluatedKey,
-    errorMsg
+    lastEvaluatedKey
   } = useSelector(state => state.posts);
 
   const dispatch = useDispatch();
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const loadMore = () => {
-    if (lastEvaluatedKey.id) {
-      fetchPosts({startFromId: lastEvaluatedKey.id}, dispatch)
-    }
-  }
+  const fetchPosts = (startFromId) => {
+    setLoading(true);
+
+    return API.get('api', '/posts' + (startFromId ? `?startFromId=${startFromId}` : ''))
+      .then(({posts}) => {
+        setLoading(false);
+  
+        return {
+          items: posts.Items,
+          count: posts.Count,
+          lastEvaluatedKey: posts.LastEvaluatedKey
+        };
+      })
+      .then((posts) => dispatch(loadedPosts(posts)))
+      .catch((err) => setError(err.message));
+  };
+
+  const loadMore = () => lastEvaluatedKey.id && fetchPosts(lastEvaluatedKey.id);
 
   useEffect(() => { 
-    if (!items.length) {
-      fetchPosts({}, dispatch)
-    }
+    !items.length && fetchPosts()
   }, []); // eslint-disable-line
   
-  if (isLoading) return <Spinner />;
-  if (errorMsg) return <ErrorMsg msg={errorMsg} />;
+  if (loading) return <Spinner />;
+  if (error) return <ErrorMsg msg={error} />;
   if (!items.length) return <h3>No content</h3>
 
   const mayBeLoadMore = lastEvaluatedKey && lastEvaluatedKey.id;

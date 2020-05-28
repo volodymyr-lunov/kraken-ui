@@ -32,7 +32,7 @@ const PostPage = ({match}) => {
 
   if (error) return <ErrorMsg msg={error} />;
   if (loading) return <Spinner />;
-  if (post) return <Post data={post} isPreview={false} />;
+  if (post) return <Post data={post} />;
   
   return <Spinner />;
 }

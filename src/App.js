@@ -32,19 +32,26 @@ Amplify.configure({
 });
 
 const App = () => {
-  const [ isAuthenticated, userHasAuthenticated ] = useState(false);
+  const [ authenticatedUser, userHasAuthenticated ] = useState(false);
   const [ isAuthenting, setIsAuthenting ] = useState(true);
 
   useEffect(() => {
     Auth.currentSession()
-      .then(() => userHasAuthenticated(true))
+      .then(({idToken: {payload}}) => {
+        const user = {
+          email: payload.email,
+          id: payload['cognito:username']
+        }
+
+        return userHasAuthenticated(user)
+      })
       .catch(err => console.warn(err))
       .then(() => setIsAuthenting(false));
   }, []);
 
   return (
     !isAuthenting && 
-    <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+    <AppContext.Provider value={{ authenticatedUser, userHasAuthenticated }}>
       <BrowserRouter>
         <header className={'flex-container'}>
           <div className={'flex-item'}>

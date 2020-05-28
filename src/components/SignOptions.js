@@ -5,9 +5,9 @@ import {useAppContext} from '../lib/context';
 const Menu = (child) => (<ul className={'top-menu'}>{child}</ul>)
 
 const SignOptions = () => {
-  const { isAuthenticated } = useAppContext();
+  const { authenticatedUser } = useAppContext();
 
-  if (isAuthenticated) {
+  if (authenticatedUser) {
     return Menu(
       <li key={'signout'}>
         <RouterLink to={'/signout'}>Sign Out</RouterLink>

@@ -25,10 +25,10 @@ const accessMiddleware = (isUserLogin, route) => {
 };
 
 const Menu = () => {
-  const { isAuthenticated } = useAppContext();
+  const { authenticatedUser } = useAppContext();
 
   const links = routes
-    .filter((route) => accessMiddleware(isAuthenticated, route))
+    .filter((route) => accessMiddleware(authenticatedUser, route))
     .map((route) => (
       <li key={route.label}>
         <RouterLink to={route.path} key={route.label}>

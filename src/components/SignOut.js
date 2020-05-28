@@ -5,12 +5,12 @@ import {useAppContext} from '../lib/context';
 import Spinner from './Spinner'
 
 const SignOut = () => {
-  const {isAuthenticated, userHasAuthenticated} = useAppContext();
+  const {authenticatedUser, userHasAuthenticated} = useAppContext();
   useEffect(() => {
     Auth.signOut().then(() => userHasAuthenticated(false))
   });
 
-  return isAuthenticated 
+  return authenticatedUser 
     ? <Spinner /> 
     : <Redirect to={'/signin'}/>;
 }

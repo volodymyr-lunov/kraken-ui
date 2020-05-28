@@ -22,7 +22,7 @@ const Home = () => {
     return API.get('api', '/posts' + (startFromId ? `?startFromId=${startFromId}` : ''))
       .then(({posts}) => {
         setLoading(false);
-  
+
         return {
           items: posts.Items,
           count: posts.Count,
@@ -49,7 +49,7 @@ const Home = () => {
   return (
     <Fragment>
       <div className={'posts-list'}>
-        {items.map(post => (<Post data={post} isPreview={true} key={post.id} />))}
+        {items.map(post => (<Post data={post} preview={true} key={post.id} />))}
       </div>
       {mayBeLoadMore && loadMoreBtn}
     </Fragment>

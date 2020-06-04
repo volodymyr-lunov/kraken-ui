@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {useHistory, useParams} from 'react-router';
 import {useDispatch} from 'react-redux';
-import {deletedPost} from '../actions/post';
+import {deletedPost} from '../actions/posts';
 import {API} from 'aws-amplify';
 import ErrorMsg from '../components/ErrorMsg';
 import Spinner from '../components/Spinner';
@@ -11,7 +11,7 @@ const DeletePost = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState(false);
 
   const deletePost = () => {
     setLoading(true);

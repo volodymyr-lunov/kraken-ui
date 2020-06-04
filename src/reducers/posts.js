@@ -1,51 +1,59 @@
 import * as constants from '../constants';
 
 const defaultState = {
-  items: [],
+  items: new Map(),
   count: 10,
-  lastEvaluatedKey: null,
-  isLoading: false,
-  errorMsg: false
+  lastEvaluatedKey: null
 };
 
 const posts = (state = defaultState, action) => {
-  let idx, items;
-  
   switch (action.type) {
     case constants.POSTS_LOADED:
+    {
+      const items = new Map(state.items.entries());
+      action.posts.items.forEach(item => items.set(item.id, item));
+
       return {
         ...state,
-        items: [...state.items, ...action.posts.items],
+        items,
         count: action.posts.count,
         lastEvaluatedKey: action.posts.lastEvaluatedKey
       };
+    }
 
     case constants.POST_CREATED:
+    {
+      const items = new Map(state.items.entries());
+      items.set(action.newPost.id, action.newPost);
+
       return {
         ...state,
-        items: [action.newPost, ...state.items],
+        items,
         lastEvaluatedKey: action.newPost.id
       }
+    }
 
     case constants.POST_UPDATED:
-      idx = state.items.findIndex(item => item.id === action.updatedPost.id);    
-      items = [...state.items];
-      items.splice(idx, 1, action.updatedPost);
+    {
+      const items = new Map(state.items.entries());
+      items.set(action.updatedPost.id, action.updatedPost);
 
       return {
         ...state,
         items
       }
+    }
 
     case constants.POST_DELETED:
-      idx = state.items.findIndex(item => item.id === action.id);    
-      items = [...state.items];
-      items.splice(idx, 1);
+    {
+      const items = new Map(state.items.entries());
+      items.delete(action.id);
 
       return {
         ...state,
         items
       }
+    }
 
     default:
       return state;

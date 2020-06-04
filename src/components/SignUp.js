@@ -11,8 +11,8 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [newUser, setNewUser] = useState(null);
   const {userHasAuthenticated} = useAppContext();
-  const [error, setError] = useState('');
-  const errorMsg = error.length ? <ErrorMsg msg={error} /> : '';
+  const [error, setError] = useState(false);
+  const errorMsg = error ? <ErrorMsg msg={error} /> : '';
   const [{email, password, confirmPassword, confirmationCode}, fieldsHasChanged] = useFormFields({
     email: '', 
     password: '', 

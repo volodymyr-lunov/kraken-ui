@@ -8,12 +8,12 @@ import ErrorMsg from './ErrorMsg';
 
 const SignIn = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
   const history = useHistory();
   const {search} = useLocation();
   const {userHasAuthenticated} = useAppContext();
   const [{email, password}, fieldsHasChanged] = useFormFields({ email: '', password: '' });
-  const errorMsg = error.length ? <ErrorMsg msg={error} /> : '';
+  const errorMsg = error ? <ErrorMsg msg={error} /> : '';
 
   const validateForm = () => email.length && password.length;
 

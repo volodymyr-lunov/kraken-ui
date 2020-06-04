@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useHistory, useParams} from 'react-router';
 import {useDispatch, useSelector} from 'react-redux';
 import {API} from 'aws-amplify';
-import {createdPost, updatedPost} from '../actions/post';
+import {createdPost, updatedPost} from '../actions/posts';
 import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
 
@@ -10,12 +10,12 @@ const CreateEditPost = () => {
   const {postId} = useParams();
   const editMode = !!postId;
   const {items} = useSelector(state => state.posts);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
   const [post, setPost] = useState({title: '', body: ''});
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
-  const errorMsg = error.length ? <ErrorMsg msg={error} /> : '';
+  const errorMsg = error ? <ErrorMsg msg={error} /> : '';
 
   const validateForm = () => post.title.length && post.body.length;
   const submitForm = () => editMode ? updatePost() : createPost();

@@ -24,12 +24,10 @@ const comments = (state = defaultState, action) => {
     case constants.COMMENT_CREATED:
     {
       const items = new Map(state.items.entries());
-      
-      console.log(items.has(action.postId))
 
       items.has(action.postId) 
         ? items.get(action.postId).unshift(action.newComment)
-        : items.set(action.postId, [action.newComment])
+        : items.set(action.postId, [action.newComment]);
 
       return {
         ...state,

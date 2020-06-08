@@ -163,12 +163,12 @@ footer {
   color: red;
 }
 
-/* Comments */
-.comments-block{
+/* CommentsForm */
+.comments-form{
   text-align: left;
 }
 
-.comments-block textarea{
+.comments-form textarea{
   min-width: 100%;
   max-width: 100%;
   padding: 5px;
@@ -178,11 +178,17 @@ footer {
   border: 1px solid #ddd;
 }
 
-.comments-block textarea:focus {
+.comments-form textarea:focus {
   outline: none;
 }
 
-.comments-block .comment{
+/* CommentsList */
+
+.comments-list {
+  text-align: left;
+}
+
+.comments-list .comment{
   border: 1px solid #cacaca;
   padding: 5px;
   margin: 5px 0;

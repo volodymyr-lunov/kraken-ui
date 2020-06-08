@@ -1,29 +1,29 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 import {useAppContext} from '../lib/context';
-
-const Menu = (child) => (<ul className={'top-menu'}>{child}</ul>)
 
 const SignOptions = () => {
   const { authenticatedUser } = useAppContext();
 
   if (authenticatedUser) {
-    return Menu(
-      <li key={'signout'}>
-        <RouterLink to={'/signout'}>Sign Out</RouterLink>
-      </li>
+    return (
+      <ul className={'top-menu'}>
+        <li key={'signout'}>
+          <RouterLink to={'/signout'}>Sign Out</RouterLink>
+        </li>
+      </ul>
     );
   }
 
-  return Menu(
-    <Fragment>
+  return (
+    <ul className={'top-menu'}>
       <li key={'signin'}>
         <RouterLink to="/signin">Sign In</RouterLink>
       </li>
       <li key={'signup'}>
         <RouterLink to="/signup">Sign Up</RouterLink>
       </li>
-    </Fragment>
+    </ul>
   )
 };
 

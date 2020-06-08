@@ -6,6 +6,7 @@ import Spinner from './Spinner'
 
 const SignOut = () => {
   const {authenticatedUser, userHasAuthenticated} = useAppContext();
+
   useEffect(() => {
     Auth.signOut().then(() => userHasAuthenticated(false))
   });

@@ -4,7 +4,8 @@ import {useSelector} from 'react-redux';
 import Post from '../components/Post';
 import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
-import Comments from './Comments';
+import CommentsList from './CommentsList';
+import CommentsForm from './CommentsForm';
 
 const PostPage = ({match}) => {
   const {postId} = match.params;
@@ -36,7 +37,8 @@ const PostPage = ({match}) => {
     return (
       <Fragment>
         <Post data={post} />
-        <Comments postId={postId} />
+        <CommentsForm postId={postId}/>
+        <CommentsList postId={postId} />
       </Fragment>
     );
   }

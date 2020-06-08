@@ -16,7 +16,6 @@ const SignIn = () => {
   const errorMsg = error ? <ErrorMsg msg={error} /> : '';
 
   const validateForm = () => email.length && password.length;
-
   const getBackUrl = () => search.length ? search.match(/redirect=(.*)/)[1] : '/home';
 
   const submitUser = async () => {

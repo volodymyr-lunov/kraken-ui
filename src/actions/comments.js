@@ -1,13 +1,14 @@
 import * as constants from '../constants';
 
-export const loadedComments = (postId, comments) => ({
+export const loadedComments = ({postId, parentId, comments}) => ({
   type: constants.COMMENTS_LOADED,
   postId,
+  parentId,
   comments
 });
 
-export const createdComment = (postId, newComment) => ({
+export const createdComment = ({postId, comment}) => ({
   type: constants.COMMENT_CREATED,
   postId,
-  newComment
+  comment
 });

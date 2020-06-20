@@ -5,7 +5,7 @@ import {createdComment} from '../actions/comments';
 import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
 
-const CommentsForm = ({postId}) => {
+const CommentsForm = ({postId, parentId, onCreated = () => {}}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [body, setBody] = useState('');
@@ -15,12 +15,17 @@ const CommentsForm = ({postId}) => {
 
   const createComment = () => {
     setLoading(true);
-    return API.post('api', `/posts/${postId}/comments`, {body:{body}})
-      .then(({comment}) => dispatch(createdComment(postId, comment)))
+    const comment = {body};
+
+    if (parentId) comment.parentId = parentId;
+
+    return API.post('api', `/posts/${postId}/comments`, {body: comment})
+      .then(({comment}) => dispatch(createdComment({postId, comment})))
       .catch(({response}) => setError(response.data.message))
       .finally(() => {
         setBody('');
         setLoading(false);
+        onCreated(comment);
       })
   }
 

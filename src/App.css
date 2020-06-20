@@ -7,6 +7,7 @@
 
 ul {
   text-align: left;
+  list-style: none;
 }
 
 header {
@@ -42,6 +43,15 @@ footer {
 
 .date {
   color: #7a31bc;
+}
+
+.link{
+  cursor: pointer;
+  color: #7f6a92;
+}
+
+.link:hover {
+  text-decoration: underline;
 }
 
 /* buttons */

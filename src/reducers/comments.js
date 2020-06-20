@@ -1,42 +1,69 @@
 import * as constants from '../constants';
 
-const defaultState = {
-  items: new Map(),
-  count: 10,
-  scannedCount: 0
-};
+/*
+
+const defaultState = new Map({
+  "${postId}": {},
+  "${postId}": {},
+  "${postId}": new Map({
+    "": new Map(); // post comments
+    "${parentId}": new Map(); // child comments
+  })
+});
+
+const comments = useSelector(state => {
+  const postComments = state.comments.has(postId) 
+    ? state.comments.get(postId) 
+    : new Map();
+  return postComments.get(parentId || '') || new Map();
+});
+
+*/
+const defaultState = new Map();
 
 const comments = (state = defaultState, action) => {
-  switch (action.type) {
-    case constants.COMMENTS_LOADED:
-    {
-      const items = new Map(state.items.entries());
-      items.set(action.postId, action.comments.items);
+  try {
+    switch (action.type) {
+      case constants.COMMENTS_LOADED:
+      {
+        const newState = new Map(state.entries());
+        const {postId, parentId = '', comments} = action;
+        
+        const payload = new Map();
+        comments.items.forEach(item => payload.set(item.id, item));
+  
+        if (!newState.has(postId)) {
+          newState.set(postId, new Map())
+        }
+  
+        newState.get(postId).set(parentId, payload);
 
-      return {
-        ...state,
-        items,
-        count: comments.count,
-        scannedCount: comments.scannedCount
+        return newState;
       }
-    }
-    
-    case constants.COMMENT_CREATED:
-    {
-      const items = new Map(state.items.entries());
+      
+      case constants.COMMENT_CREATED:
+      {
+        const newState = new Map(state.entries());
+        const {postId, comment} = action;
+        const {parentId = ''} = comment;
 
-      items.has(action.postId) 
-        ? items.get(action.postId).unshift(action.newComment)
-        : items.set(action.postId, [action.newComment]);
+        if (!newState.has(postId)) {
+          newState.set(postId, new Map())
+        }
+  
+        const list = newState.get(postId).get(parentId) || new Map();
+        list.set(comment.id, comment);
+  
+        newState.get(postId).set(parentId, list);
 
-      return {
-        ...state,
-        items
+        return newState;
       }
+  
+      default:
+        return state;
     }
-
-    default:
-      return state;
+  } catch (err) {
+    console.log(err)
   }
 }
 

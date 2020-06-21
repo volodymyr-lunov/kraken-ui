@@ -24,7 +24,10 @@ const posts = (state = defaultState, action) => {
     case constants.POST_CREATED:
     {
       const items = new Map(state.items.entries());
-      items.set(action.newPost.id, action.newPost);
+
+      if (items.has(action.newPost.id)) {
+        items.set(action.newPost.id, action.newPost);
+      }
 
       return {
         ...state,
@@ -36,7 +39,10 @@ const posts = (state = defaultState, action) => {
     case constants.POST_UPDATED:
     {
       const items = new Map(state.items.entries());
-      if (items.has(action.updatedPost.id)) items.set(action.updatedPost.id, action.updatedPost);
+
+      if (items.has(action.updatedPost.id)) {
+        items.set(action.updatedPost.id, action.updatedPost);
+      }
 
       return {
         ...state,

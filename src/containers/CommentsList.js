@@ -12,15 +12,7 @@ const CommentsList = ({postId, parentId}) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  
-  /*const comments = useSelector(state => {
-    const postComments = state.comments.has(postId) ? state.comments.get(postId) : new Map();
-    return postComments.get(parentId || '') || new Map();
-  });*/
-
-  const comments = useSelector(state => state.comments.get(postId))?.get(parentId || '');
-
-  console.log({comments});
+  const {comments} = useSelector(state => ({comments: state.comments.get(postId)?.get(parentId || '') || new Map()}));
 
   const fetchComments = () => {
     setLoading(true);

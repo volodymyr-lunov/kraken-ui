@@ -36,7 +36,7 @@ const posts = (state = defaultState, action) => {
     case constants.POST_UPDATED:
     {
       const items = new Map(state.items.entries());
-      items.set(action.updatedPost.id, action.updatedPost);
+      if (items.has(action.updatedPost.id)) items.set(action.updatedPost.id, action.updatedPost);
 
       return {
         ...state,

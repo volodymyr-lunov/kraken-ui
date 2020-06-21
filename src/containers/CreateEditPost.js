@@ -65,10 +65,7 @@ const CreateEditPost = () => {
 
   useEffect(() => {
     if (editMode) {
-      const foundPost = items.find(post => post.id === postId);
-      foundPost 
-        ? setPost(foundPost)
-        : fetchPost();
+      items.has(postId) ? setPost(items.get(postId)) : fetchPost();
     }
   }, []); // eslint-disable-line
 

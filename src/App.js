@@ -41,7 +41,7 @@ const App = () => {
         const user = {
           email: payload.email,
           id: payload['cognito:username']
-        }
+        };
 
         return userHasAuthenticated(user)
       })
@@ -50,7 +50,7 @@ const App = () => {
   }, []);
 
   return (
-    !isAuthenting && 
+    !isAuthenting &&
     <AppContext.Provider value={{ authenticatedUser, userHasAuthenticated }}>
       <BrowserRouter>
         <header className={'flex-container'}>
@@ -77,6 +77,6 @@ const App = () => {
       </BrowserRouter>
     </AppContext.Provider>
   );
-}
+};
 
 export default App;

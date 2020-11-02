@@ -23,7 +23,21 @@ const SignIn = () => {
 
     Auth.signIn(email, password)
       .then(() => userHasAuthenticated(true))
-      .catch(({response}) => setError(response.data.message))
+      //.catch(({response}) => setError(response.data.message))
+      .catch(err => {
+        /*
+        
+        
+        {
+          message: "User does not exist."
+          __type: "UserNotFoundException"
+        }
+
+        
+
+        */
+        console.log(err)
+      })
       .then(() => {
         setLoading(false);
         history.push(getBackUrl());

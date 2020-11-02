@@ -1,13 +1,13 @@
 export default {
   apiGateway: {
     REGION: 'eu-central-1',
-    URL: 'https://haqwxqby8i.execute-api.eu-central-1.amazonaws.com/dev'
+    URL: 'https://oqx232cms2.execute-api.eu-central-1.amazonaws.com/dev'
   },
   cognito: {
     REGION: 'eu-central-1',
-    USER_POOL_ID: 'eu-central-1_lrOAy0zqu',
-    APP_CLIENT_ID: '5ve5j2rr3nsvukpumoql4h07s7',
-    IDENTITY_POOL_ID: 'eu-central-1:8ccc9ebc-83a4-4c1c-82c0-6c412de7298e'
+    USER_POOL_ID: 'eu-central-1_RAR6bRBTO',
+    APP_CLIENT_ID: '1gqct359a8ur9th9mhqpag5vve',
+    IDENTITY_POOL_ID: 'eu-central-1:02158b95-ca89-41ba-8a11-50018a8f15dd'
   },
   s3: {
     REGION: 'eu-central-1',

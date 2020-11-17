@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "auth0-lock": "^11.27.1",
-    "aws-amplify": "^3.3.6",
+    "aws-amplify": "^3.3.8",
     "axios": "^0.19.2",
     "moment": "^2.29.1",
     "react": "^16.14.0",

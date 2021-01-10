@@ -21,13 +21,13 @@ const SignIn = () => {
   const submitUser = async () => {
     setLoading(true);
 
-    Auth.signIn(email, password)
-      .then(() => userHasAuthenticated(true))
-      .catch(({response}) => setError(response.data.message))
+    Auth.signIn(email, password) 
       .then(() => {
-        setLoading(false);
-        history.push(getBackUrl());
-      });
+        userHasAuthenticated(true);
+        window.setInterval(() => history.push(getBackUrl()), 0);
+      })
+      .catch(({ message }) => setError(message))
+      .finally(() => setLoading(false));
     };
 
   if (loading) return <Spinner/>

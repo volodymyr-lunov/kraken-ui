@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@aws-amplify/ui-react": "^0.2.33",
     "auth0-lock": "^11.27.1",
-    "aws-amplify": "^3.3.8",
+    "aws-amplify": "^3.3.13",
     "axios": "^0.19.2",
     "moment": "^2.29.1",
     "react": "^16.14.0",

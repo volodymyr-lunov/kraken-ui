@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {AppContext} from './lib/context';
 import {Amplify, Auth} from 'aws-amplify';
+import awsExports from './aws-exports';
 import Menu from './components/Menu';
 import Content from './components/Content';
 import Footer from './components/Footer';
@@ -10,18 +11,7 @@ import config from './config';
 import './App.css';
 
 Amplify.configure({
-  Auth: {
-    mandatorySignIn: true,
-    region: config.cognito.REGION,
-    userPoolId: config.cognito.USER_POOL_ID,
-    identityPoolId: config.cognito.IDENTITY_POOL_ID,
-    userPoolWebClientId: config.cognito.APP_CLIENT_ID
-  },
-  Storage: {
-    region: config.s3.REGION,
-    bucket: config.s3.BUCKET,
-    identityPoolId: config.cognito.IDENTITY_POOL_ID
-  },
+  ...awsExports,
   API: {
     endpoints: [{
       name: 'api',
@@ -37,7 +27,7 @@ const App = () => {
 
   useEffect(() => {
     Auth.currentSession()
-      .then(({idToken: {payload}}) => {
+      .then(({ idToken: { payload } }) => {
         const user = {
           email: payload.email,
           id: payload['cognito:username']

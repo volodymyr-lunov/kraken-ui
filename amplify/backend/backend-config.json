@@ -1,26 +1,24 @@
 {
-  "storage": {
-    "posts": {
-      "service": "DynamoDB",
-      "serviceType": "imported",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": []
-    },
-    "comments": {
-      "service": "DynamoDB",
-      "serviceType": "imported",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": []
-    }
-  },
   "auth": {
+    "krakenuiad8fdcaf": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    },
+    "krakenui75b98649": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    },
     "userPoolGroups": {
       "service": "Cognito-UserPool-Groups",
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
           "category": "auth",
-          "resourceName": "KrakenAuth",
+          "resourceName": "krakenui8d3cd0378d3cd037",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
@@ -30,8 +28,15 @@
         }
       ]
     },
-    "KrakenAuth": {
+    "krakenui8d3cd0378d3cd037": {
       "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    },
+    "krakenui9f611bed": {
+      "service": "Cognito",
+      "serviceType": "imported",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false

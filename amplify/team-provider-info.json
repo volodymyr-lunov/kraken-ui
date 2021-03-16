@@ -1,37 +1,31 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-krakenui-dev-233947-authRole",
-      "UnauthRoleArn": "arn:aws:iam::716914592536:role/amplify-krakenui-dev-233947-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::716914592536:role/amplify-krakenui-dev-233947-authRole",
+      "AuthRoleName": "amplify-krakenui-dev-183358-authRole",
+      "UnauthRoleArn": "arn:aws:iam::716914592536:role/amplify-krakenui-dev-183358-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::716914592536:role/amplify-krakenui-dev-183358-authRole",
       "Region": "eu-central-1",
-      "DeploymentBucketName": "amplify-krakenui-dev-233947-deployment",
-      "UnauthRoleName": "amplify-krakenui-dev-233947-unauthRole",
-      "StackName": "amplify-krakenui-dev-233947",
-      "StackId": "arn:aws:cloudformation:eu-central-1:716914592536:stack/amplify-krakenui-dev-233947/e2b56ba0-47c2-11eb-bbae-0a4f39e5ed38",
-      "AmplifyAppId": "d2wl3y9mqqxihi"
+      "DeploymentBucketName": "amplify-krakenui-dev-183358-deployment",
+      "UnauthRoleName": "amplify-krakenui-dev-183358-unauthRole",
+      "StackName": "amplify-krakenui-dev-183358",
+      "StackId": "arn:aws:cloudformation:eu-central-1:716914592536:stack/amplify-krakenui-dev-183358/157390f0-84e3-11eb-a82d-02c3e7a21576",
+      "AmplifyAppId": "d3rxe4e67jbwva"
     },
     "categories": {
-      "storage": {
-        "posts": {
-          "tableName": "posts",
-          "region": "eu-central-1",
-          "arn": "arn:aws:dynamodb:eu-central-1:716914592536:table/posts",
-          "partitionKeyName": "id",
-          "partitionKeyType": "S"
-        },
-        "comments": {
-          "tableName": "comments",
-          "region": "eu-central-1",
-          "arn": "arn:aws:dynamodb:eu-central-1:716914592536:table/comments",
-          "partitionKeyName": "postId",
-          "partitionKeyType": "S",
-          "sortKeyName": "id",
-          "sortKeyType": "S"
-        }
-      },
       "auth": {
-        "KrakenAuth": {}
+        "krakenui9f611bed": {
+          "userPoolId": "eu-central-1_RAR6bRBTO",
+          "userPoolName": "kraken-user-pool",
+          "webClientId": "1gqct359a8ur9th9mhqpag5vve",
+          "nativeClientId": "1gqct359a8ur9th9mhqpag5vve",
+          "identityPoolId": "eu-central-1:02158b95-ca89-41ba-8a11-50018a8f15dd",
+          "identityPoolName": "kraken_IdentityPool",
+          "allowUnauthenticatedIdentities": false,
+          "authRoleArn": "arn:aws:iam::716914592536:role/api-dev-CognitoAuthRole-1TDVP96M9S7ZB",
+          "authRoleName": "api-dev-CognitoAuthRole-1TDVP96M9S7ZB",
+          "unauthRoleArn": "arn:aws:iam::716914592536:role/api-dev-CognitoUnAuthRole-1TDVP96M9S7ZB",
+          "unauthRoleName": "api-dev-CognitoUnAuthRole-1TDVP96M9S7ZB"
+        }
       }
     }
   }

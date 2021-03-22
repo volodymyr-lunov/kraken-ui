@@ -21,11 +21,15 @@
           "identityPoolId": "eu-central-1:02158b95-ca89-41ba-8a11-50018a8f15dd",
           "identityPoolName": "kraken_IdentityPool",
           "allowUnauthenticatedIdentities": false,
-          "authRoleArn": "arn:aws:iam::716914592536:role/api-dev-CognitoAuthRole-1TDVP96M9S7ZB",
-          "authRoleName": "api-dev-CognitoAuthRole-1TDVP96M9S7ZB",
-          "unauthRoleArn": "arn:aws:iam::716914592536:role/api-dev-CognitoUnAuthRole-1TDVP96M9S7ZB",
-          "unauthRoleName": "api-dev-CognitoUnAuthRole-1TDVP96M9S7ZB"
-        }
+          "authRoleArn": "arn:aws:iam::716914592536:role/KrakenAuthRole",
+          "authRoleName": "KrakenAuthRole",
+          "unauthRoleArn": "arn:aws:iam::716914592536:role/KrakenUnauthRole",
+          "unauthRoleName": "KrakenUnauthRole"
+        },
+        "krakenuiad8fdcaf": {},
+        "krakenui75b98649": {},
+        "userPoolGroups": {},
+        "krakenui8d3cd0378d3cd037": {}
       }
     }
   }

@@ -25,11 +25,7 @@
           "authRoleName": "KrakenAuthRole",
           "unauthRoleArn": "arn:aws:iam::716914592536:role/KrakenUnauthRole",
           "unauthRoleName": "KrakenUnauthRole"
-        },
-        "krakenuiad8fdcaf": {},
-        "krakenui75b98649": {},
-        "userPoolGroups": {},
-        "krakenui8d3cd0378d3cd037": {}
+        }
       }
     }
   }

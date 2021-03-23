@@ -20,7 +20,6 @@ const SignIn = () => {
 
   const submitUser = async () => {
     setLoading(true);
-
     Auth.signIn(email, password) 
       .then(() => userHasAuthenticated(true))
       .then(() => history.push(getBackUrl()))

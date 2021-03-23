@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {AppContext} from './lib/context';
-import {Amplify, Auth} from 'aws-amplify';
+import {Amplify, Auth, API} from 'aws-amplify';
 import awsExports from './aws-exports';
 import Menu from './components/Menu';
 import Content from './components/Content';
@@ -10,8 +10,8 @@ import SignOptions from './components/SignOptions';
 import config from './config';
 import './App.css';
 
-Amplify.configure({
-  ...awsExports,
+Amplify.configure(awsExports);
+API.configure({
   API: {
     endpoints: [{
       name: 'api',

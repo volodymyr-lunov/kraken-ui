@@ -20,12 +20,9 @@ const SignIn = () => {
 
   const submitUser = async () => {
     setLoading(true);
-
     Auth.signIn(email, password) 
-      .then(() => {
-        userHasAuthenticated(true);
-        window.setInterval(() => history.push(getBackUrl()), 0);
-      })
+      .then(() => userHasAuthenticated(true))
+      .then(() => history.push(getBackUrl()))
       .catch(({ message }) => setError(message))
       .finally(() => setLoading(false));
     };

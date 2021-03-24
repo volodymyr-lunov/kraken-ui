@@ -34,7 +34,7 @@ const Home = () => {
   const loadMore = () => lastEvaluatedKey.id && fetchPosts(lastEvaluatedKey.id);
 
   useEffect(() => { 
-    if (!items.size) fetchPosts();
+    fetchPosts();
   }, []); // eslint-disable-line
   
   if (loading) return <Spinner />;

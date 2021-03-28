@@ -4,7 +4,8 @@ import {
   POSTS_LOADING, 
   POST_CREATED, 
   POST_DELETED, 
-  POST_UPDATED
+  POST_UPDATED,
+  POST_LOADED
 } from '../constants';
 
 const defaultState = {
@@ -12,7 +13,9 @@ const defaultState = {
   count: 10,
   lastEvaluatedKey: null,
   loading: false,
-  error: null
+  error: null,
+  needsUpdate: true,
+  post: null
 };
 
 const posts = (state = defaultState, action) => {
@@ -39,18 +42,23 @@ const posts = (state = defaultState, action) => {
           ...state,
           loading: false,
           items,
+          needsUpdate: false,
           count: action.posts.count,
           lastEvaluatedKey: action.posts.lastEvaluatedKey
         };
       }
 
+    case POST_LOADED:
+      return {
+        ...state,
+        loading: false,
+        post: action.post
+      }
+
     case POST_CREATED:
       {
         const items = new Map(state.items.entries());
-
-        if (items.has(action.newPost.id)) {
-          items.set(action.newPost.id, action.newPost);
-        }
+        items.set(action.newPost.id, action.newPost);
 
         return {
           ...state,
@@ -62,10 +70,7 @@ const posts = (state = defaultState, action) => {
     case POST_UPDATED:
       {
         const items = new Map(state.items.entries());
-
-        if (items.has(action.updatedPost.id)) {
-          items.set(action.updatedPost.id, action.updatedPost);
-        }
+        items.set(action.updatedPost.id, action.updatedPost);
 
         return {
           ...state,

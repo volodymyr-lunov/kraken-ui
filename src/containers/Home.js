@@ -7,13 +7,19 @@ import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
 
 const Home = () => {
-  const { items, lastEvaluatedKey, loading, error } = useSelector(state => state.posts);
+  const {
+    items, 
+    needsUpdate,
+    lastEvaluatedKey,
+    loading,
+    error
+  } = useSelector(state => state.posts);
 
   const dispatch = useDispatch();
-  const loadMore = () => lastEvaluatedKey.id && loadPosts(lastEvaluatedKey.id)(dispatch);
+  const loadMore = () => lastEvaluatedKey.id && dispatch(loadPosts(lastEvaluatedKey.id));
 
-  useEffect(() => { 
-    dispatch(loadPosts());
+  useEffect(() => {
+    needsUpdate && dispatch(loadPosts());
   }, []); // eslint-disable-line
   
   if (loading) return <Spinner />;

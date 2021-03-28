@@ -1,6 +1,6 @@
-import React, {useEffect, useState, Fragment} from 'react';
-import {API} from 'aws-amplify';
-import {useSelector} from 'react-redux';
+import React, {useEffect, Fragment} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {loadPost} from '../actions/posts';
 import Post from '../components/Post';
 import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
@@ -8,27 +8,12 @@ import CommentsList from './CommentsList';
 import CommentsForm from './CommentsForm';
 
 const PostPage = ({match}) => {
+  const dispatch = useDispatch();
   const {postId} = match.params;
-  const {items} = useSelector(state => state.posts);
-  const [post, setPost] = useState(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const fetchPost = (id) => {
-    setLoading(true);
-    return API.get('api', `/posts/${id}`)
-      .then(({post}) => {
-        setLoading(false);
-        setPost(post);
-        return post;
-      })
-      .catch(({response}) => setError(response.data.message));
-  }
+  const {post, error, loading} = useSelector(state => state.posts);
 
   useEffect(() => {
-    items.has(postId) 
-      ? setPost(items.get(postId))
-      : fetchPost(postId);
+    dispatch(loadPost(postId));
   }, []); // eslint-disable-line
 
   if (error) return <ErrorMsg msg={error} />;

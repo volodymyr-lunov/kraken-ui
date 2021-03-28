@@ -1,4 +1,6 @@
+export const POSTS_LOADING = 'POST_LOADING';
 export const POSTS_LOADED = 'POSTS_LOADED';
+export const POSTS_ERROR = 'POSTS_ERROR';
 
 export const POST_CREATED = 'POST_CREATED';
 export const POST_UPDATED = 'POST_UPDATED';

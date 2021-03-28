@@ -1,65 +1,88 @@
-import * as constants from '../constants';
+import {
+  POSTS_ERROR, 
+  POSTS_LOADED, 
+  POSTS_LOADING, 
+  POST_CREATED, 
+  POST_DELETED, 
+  POST_UPDATED
+} from '../constants';
 
 const defaultState = {
   items: new Map(),
   count: 10,
-  lastEvaluatedKey: null
+  lastEvaluatedKey: null,
+  loading: false,
+  error: null
 };
 
 const posts = (state = defaultState, action) => {
   switch (action.type) {
-    case constants.POSTS_LOADED:
-    {
-      const items = new Map(state.items.entries());
-      action.posts.items.forEach(item => items.set(item.id, item));
-
+    case POSTS_LOADING:
       return {
         ...state,
-        items,
-        count: action.posts.count,
-        lastEvaluatedKey: action.posts.lastEvaluatedKey
+        loading: true
       };
-    }
-
-    case constants.POST_CREATED:
-    {
-      const items = new Map(state.items.entries());
-
-      if (items.has(action.newPost.id)) {
-        items.set(action.newPost.id, action.newPost);
-      }
-
+    
+    case POSTS_ERROR:
       return {
         ...state,
-        items,
-        lastEvaluatedKey: action.newPost.id
+        loading: false,
+        error: action.error
+      };
+
+    case POSTS_LOADED:
+      {
+        const items = new Map(state.items.entries());
+        action.posts.items.forEach(item => items.set(item.id, item));
+
+        return {
+          ...state,
+          loading: false,
+          items,
+          count: action.posts.count,
+          lastEvaluatedKey: action.posts.lastEvaluatedKey
+        };
       }
-    }
 
-    case constants.POST_UPDATED:
-    {
-      const items = new Map(state.items.entries());
+    case POST_CREATED:
+      {
+        const items = new Map(state.items.entries());
 
-      if (items.has(action.updatedPost.id)) {
-        items.set(action.updatedPost.id, action.updatedPost);
+        if (items.has(action.newPost.id)) {
+          items.set(action.newPost.id, action.newPost);
+        }
+
+        return {
+          ...state,
+          items,
+          lastEvaluatedKey: action.newPost.id
+        }
       }
 
-      return {
-        ...state,
-        items
-      }
-    }
+    case POST_UPDATED:
+      {
+        const items = new Map(state.items.entries());
 
-    case constants.POST_DELETED:
-    {
-      const items = new Map(state.items.entries());
-      items.delete(action.id);
+        if (items.has(action.updatedPost.id)) {
+          items.set(action.updatedPost.id, action.updatedPost);
+        }
 
-      return {
-        ...state,
-        items
+        return {
+          ...state,
+          items
+        }
       }
-    }
+
+    case POST_DELETED:
+      {
+        const items = new Map(state.items.entries());
+        items.delete(action.id);
+
+        return {
+          ...state,
+          items
+        }
+      }
 
     default:
       return state;

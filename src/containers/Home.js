@@ -15,7 +15,7 @@ const Home = () => {
   } = useSelector(state => state.posts);
 
   const dispatch = useDispatch();
-  const loadMore = () => lastEvaluatedKey.id && dispatch(getPosts(lastEvaluatedKey.id));
+  const loadMore = () => lastEvaluatedKey && dispatch(getPosts(lastEvaluatedKey));
 
   useEffect(() => {
     if (!posts.size) dispatch(getPosts());

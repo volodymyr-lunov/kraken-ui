@@ -1,58 +1,89 @@
 import * as types from '../types';
 
 /*
-  const defaultState = new Map({
-    "${postId}": {},
-    "${postId}": {},
-    "${postId}": new Map({
-      "": new Map(); // post comments
-      "${parentId}": new Map(); // child comments
-    })
-  });
+  // Raw store explanation
 
-  const {comments} = useSelector(state => ({comments: state.comments.get(postId)?.get(parentId || '') || new Map()}));
+  const defaultState = {
+    comments: new Map({
+      "${postId}": {},
+      "${postId}": {},
+      "${postId}": new Map({
+        "": new Map(); // post comments
+        "${parentId}": new Map(); // child comments
+      })
+    }),
+    loading: false,
+    error: null
+  }
+
+  const {comments} = useSelector(state => ({comments: state.comments.comments.get(postId)?.get(parentId || '') || new Map()}));
 */
 
-const comments = (state = new Map(), action) => {
+const defaultState = {
+  comments: new Map(),
+  loading: false,
+  error: null
+};
+
+export default (state = defaultState, action) => {
   switch (action.type) {
+    case types.COMMENTS_LOADING:
+      return {
+        ...state,
+        loading: true
+      };
+    
+    case types.COMMENTS_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.error
+      };
+
     case types.COMMENTS_LOADED:
-    {
-      const newState = new Map(state.entries());
-      const {postId, parentId = '', comments} = action;
-      
-      const payload = new Map();
-      comments.items.forEach(item => payload.set(item.id, item));
+      {
+        const comments = new Map(state.comments);
+        const {postId, parentId = ''} = action;
 
-      if (!newState.has(postId)) {
-        newState.set(postId, new Map())
+        const payload = new Map();
+        action.comments.items.forEach(item => payload.set(item.id, item));
+
+        if (!comments.has(postId)) {
+          comments.set(postId, new Map())
+        }
+
+        comments.get(postId).set(parentId, payload);
+
+        return {
+          ...state,
+          loading: false,
+          comments
+        };
       }
-
-      newState.get(postId).set(parentId, payload);
-
-      return newState;
-    }
     
     case types.COMMENT_CREATED:
-    {
-      const newState = new Map(state.entries());
-      const {postId, comment} = action;
-      const {parentId = ''} = comment;
+      {
+        const comments = new Map(state.comments);
 
-      if (!newState.has(postId)) {
-        newState.set(postId, new Map())
+        const {postId, comment, comment: {parentId = ''}} = action;
+
+        if (!comments.has(postId)) {
+          comments.set(postId, new Map())
+        }
+
+        const list = comments.get(postId).get(parentId) || new Map();
+        list.set(comment.id, comment);
+
+        comments.get(postId).set(parentId, list);
+
+        return {
+          ...state,
+          loading: false,
+          comments
+        };
       }
-
-      const list = newState.get(postId).get(parentId) || new Map();
-      list.set(comment.id, comment);
-
-      newState.get(postId).set(parentId, list);
-
-      return newState;
-    }
 
     default:
       return state;
   }
-}
-
-export default comments;
+};

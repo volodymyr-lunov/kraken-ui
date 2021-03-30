@@ -1,7 +1,7 @@
 import React, {useEffect, Fragment} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {mapMap} from '../lib/utils';
-import {getPosts} from '../actions/posts';
+import {fetchPosts} from '../actions/posts';
 import Post from '../components/Post';
 import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
@@ -15,10 +15,10 @@ const Home = () => {
   } = useSelector(state => state.posts);
 
   const dispatch = useDispatch();
-  const loadMore = () => lastEvaluatedKey && dispatch(getPosts(lastEvaluatedKey));
+  const loadMore = () => lastEvaluatedKey && dispatch(fetchPosts(lastEvaluatedKey));
 
   useEffect(() => {
-    if (!posts.size) dispatch(getPosts());
+    if (!posts.size) dispatch(fetchPosts());
   }, []); // eslint-disable-line
   
   if (loading) return <Spinner />;

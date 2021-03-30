@@ -1,6 +1,6 @@
 import {API} from 'aws-amplify';
 
-export const getPosts = (lastEvaluatedKey) => API
+export const fetchPosts = (lastEvaluatedKey) => API
   .get('api', `/posts${lastEvaluatedKey ? `?startFromId=${lastEvaluatedKey.id}` : ''}`)
   .then(({posts}) => ({
     posts: posts.Items,

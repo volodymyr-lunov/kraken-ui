@@ -1,12 +1,11 @@
 import * as types from '../types';
-import * as postsService from '../services/posts-service';
+import * as postsService from '../services/posts';
+export const error = (dispatch) => ({message}) => dispatch(errorPosts(message));
 
-const error = (dispatch) => ({message}) => dispatch(errorPosts(message));
-
-export const getPosts = (lastEvaluatedKey) => (dispatch) => {
+export const fetchPosts = (lastEvaluatedKey) => (dispatch) => {
   dispatch(loadingPosts());
 
-  return postsService.getPosts(lastEvaluatedKey)
+  return postsService.fetchPosts(lastEvaluatedKey)
     .then((posts) => dispatch(loadedPosts(posts)))
     .catch(error(dispatch));
 };

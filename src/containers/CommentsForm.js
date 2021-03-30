@@ -1,45 +1,25 @@
 import React, {useState} from 'react';
-import {API} from 'aws-amplify';
-import {useDispatch} from 'react-redux';
-import {createdComment} from '../actions/comments';
+import {useDispatch, useSelector} from 'react-redux';
+import {createComment} from '../actions/comments';
 import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
 
 const CommentsForm = ({postId, parentId, onCreated = () => {}}) => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const {loading, error} = useSelector((state) => state.comments);
   const [body, setBody] = useState('');
   const dispatch = useDispatch();
-
   const validateForm = () => body.length > 0;
+  const onSubmit = () => dispatch(createComment(postId, { body, parentId }));
 
-  const createComment = () => {
-    setLoading(true);
-    const comment = {body};
-
-    if (parentId) comment.parentId = parentId;
-
-    return API.post('api', `/posts/${postId}/comments`, {body: comment})
-      .then(({comment}) => dispatch(createdComment({postId, comment})))
-      .catch(({response}) => setError(response.data.message))
-      .finally(() => {
-        setBody('');
-        setLoading(false);
-        onCreated(comment);
-      })
-  }
-
-  const errorMsg = error ? <ErrorMsg msg={error} /> : '' 
-
-  if (loading) return <Spinner />
+  if (loading) return <Spinner />;
 
   return (
     <div className={'comments-form'}>
-      {errorMsg}
+      {error ? <ErrorMsg msg={error} /> : ''}
       <textarea placeholder="Comment" onChange={({target}) => setBody(target.value)}></textarea>
-      <button className={'btn blue-btn'} onClick={createComment} disabled={!validateForm()}>Comment</button>
+      <button className={'btn blue-btn'} onClick={onSubmit} disabled={!validateForm()}>Comment</button>
     </div>
-  )
-}
+  );
+};
 
 export default CommentsForm;

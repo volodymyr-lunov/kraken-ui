@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory, useParams} from 'react-router';
 import {useSelector, useDispatch} from 'react-redux';
-import {getPost, createPost, updatePost} from '../actions/posts';
+import {getPost, createPost, updatePost, loadedPost} from '../actions/posts';
 import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
 
@@ -10,19 +10,21 @@ const CreateEditPost = () => {
   const history = useHistory();
   const {postId} = useParams();
   const editMode = !!postId;
-  const {currentPost, error, loading, postBeenUpdated} = useSelector(state => state.posts);
+  const {currentPost, error, loading, postBeenUpdated, postBeenCreated} = useSelector(state => state.posts);
   const [post, setPost] = useState({ title: '', body: '' });
 
   const validateForm = () => post.title.length && post.body.length;
   const submitForm = () => dispatch(editMode ? updatePost(postId, post) : createPost(post));
 
   useEffect(() => {
-    if (postBeenUpdated) history.push(`/post/${postId}`);
-  }, [postBeenUpdated, postId, history]);
-
-  useEffect(() => {
     if (editMode) dispatch(getPost(postId));
   }, []); // eslint-disable-line
+
+  useEffect(() => {
+    if (postBeenUpdated || postBeenCreated) history.push(`/post/${currentPost.id}`);
+
+    return () => dispatch(loadedPost(null));
+  }, [postBeenUpdated, postBeenCreated, currentPost]); // eslint-disable-line
 
   useEffect(() => {
     if (currentPost) setPost(currentPost);

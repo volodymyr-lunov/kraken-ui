@@ -1,6 +1,6 @@
 import React, {useEffect, Fragment} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {getPost} from '../actions/posts';
+import {getPost, loadedPost} from '../actions/posts';
 import Post from '../components/Post';
 import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
@@ -14,6 +14,8 @@ const PostPage = ({match}) => {
 
   useEffect(() => {
     dispatch(getPost(postId));
+
+    return () => dispatch(loadedPost(null));
   }, []); // eslint-disable-line
 
   if (error) return <ErrorMsg msg={error} />;

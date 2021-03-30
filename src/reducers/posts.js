@@ -62,7 +62,8 @@ export default (state = defaultState, action) => {
           lastEvaluatedKey: action.createdPost.id,
           loading: false,
           postBeenCreated: true,
-          postBeenUpdated: false
+          postBeenUpdated: false,
+          currentPost: action.createdPost,
         }
       }
 
@@ -76,7 +77,8 @@ export default (state = defaultState, action) => {
           posts,
           loading: false,
           postBeenCreated: false,
-          postBeenUpdated: true
+          postBeenUpdated: true,
+          currentPost: action.updatedPost,
         }
       }
 
@@ -87,7 +89,8 @@ export default (state = defaultState, action) => {
 
         return {
           ...state,
-          posts
+          posts,
+          currentPost: null
         }
       }
 

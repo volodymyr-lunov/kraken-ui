@@ -1,6 +1,10 @@
 import * as types from '../types';
 import * as postsService from '../services/posts';
-export const error = (dispatch) => ({message}) => dispatch(errorPosts(message));
+export const error = (dispatch) => ({message}, ...err) => {
+  console.log({ err, message });
+
+  dispatch(errorPosts(message));
+};
 
 export const fetchPosts = (lastEvaluatedKey) => (dispatch) => {
   dispatch(loadingPosts());
@@ -65,7 +69,7 @@ export const createdPost = (post) => ({
 
 export const updatedPost = (post) => ({
   type: types.POST_UPDATED,
-  updatedPostpost: post
+  updatedPost: post
 });
 
 export const deletedPost = (id) => ({

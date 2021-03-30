@@ -1,4 +1,4 @@
-import * as constants from '../constants';
+import * as types from '../types';
 
 /*
   const defaultState = new Map({
@@ -15,7 +15,7 @@ import * as constants from '../constants';
 
 const comments = (state = new Map(), action) => {
   switch (action.type) {
-    case constants.COMMENTS_LOADED:
+    case types.COMMENTS_LOADED:
     {
       const newState = new Map(state.entries());
       const {postId, parentId = '', comments} = action;
@@ -32,7 +32,7 @@ const comments = (state = new Map(), action) => {
       return newState;
     }
     
-    case constants.COMMENT_CREATED:
+    case types.COMMENT_CREATED:
     {
       const newState = new Map(state.entries());
       const {postId, comment} = action;

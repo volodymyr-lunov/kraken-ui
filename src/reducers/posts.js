@@ -1,12 +1,4 @@
-import {
-  POSTS_ERROR, 
-  POSTS_LOADED, 
-  POSTS_LOADING, 
-  POST_CREATED, 
-  POST_DELETED, 
-  POST_UPDATED,
-  POST_LOADED
-} from '../constants';
+import * as types from '../types';
 
 const defaultState = {
   items: new Map(),
@@ -15,25 +7,26 @@ const defaultState = {
   loading: false,
   error: null,
   needsUpdate: true,
-  post: null
+  post: null,
+  postUpdated: false,
 };
 
 const posts = (state = defaultState, action) => {
   switch (action.type) {
-    case POSTS_LOADING:
+    case types.POSTS_LOADING:
       return {
         ...state,
         loading: true
       };
     
-    case POSTS_ERROR:
+    case types.POSTS_ERROR:
       return {
         ...state,
         loading: false,
         error: action.error
       };
 
-    case POSTS_LOADED:
+    case types.POSTS_LOADED:
       {
         const items = new Map(state.items.entries());
         action.posts.items.forEach(item => items.set(item.id, item));
@@ -48,14 +41,15 @@ const posts = (state = defaultState, action) => {
         };
       }
 
-    case POST_LOADED:
+    case types.POST_LOADED:
       return {
         ...state,
         loading: false,
-        post: action.post
+        post: action.post,
+        postUpdated: false
       }
 
-    case POST_CREATED:
+    case types.POST_CREATED:
       {
         const items = new Map(state.items.entries());
         items.set(action.newPost.id, action.newPost);
@@ -63,22 +57,25 @@ const posts = (state = defaultState, action) => {
         return {
           ...state,
           items,
-          lastEvaluatedKey: action.newPost.id
+          lastEvaluatedKey: action.newPost.id,
+          loading: false
         }
       }
 
-    case POST_UPDATED:
+    case types.POST_UPDATED:
       {
         const items = new Map(state.items.entries());
         items.set(action.updatedPost.id, action.updatedPost);
 
         return {
           ...state,
-          items
+          items,
+          loading: false,
+          postUpdated: true
         }
       }
 
-    case POST_DELETED:
+    case types.POST_DELETED:
       {
         const items = new Map(state.items.entries());
         items.delete(action.id);

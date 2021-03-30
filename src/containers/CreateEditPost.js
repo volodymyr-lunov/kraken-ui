@@ -1,79 +1,38 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory, useParams} from 'react-router';
-import {useDispatch, useSelector} from 'react-redux';
-import {API} from 'aws-amplify';
-import {createdPost, updatedPost} from '../actions/posts';
+import {useSelector, useDispatch} from 'react-redux';
+import {getPost, createPost, updatePost} from '../actions/posts';
 import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
 
 const CreateEditPost = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const {postId} = useParams();
   const editMode = !!postId;
-  const {items} = useSelector(state => state.posts);
-  const [error, setError] = useState(false);
-  const [post, setPost] = useState({title: '', body: ''});
-  const [loading, setLoading] = useState(false);
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const errorMsg = error ? <ErrorMsg msg={error} /> : '';
+  const {post: statePost, error, loading, postUpdated} = useSelector(state => state.posts);
+  const [post, setPost] = useState({ title: '', body: '' });
 
   const validateForm = () => post.title.length && post.body.length;
-  const submitForm = () => editMode ? updatePost() : createPost();
-
-  const fetchPost = () => {
-    setLoading(true);
-    return API.get('api', `/posts/${postId}`)
-      .then(({post}) => {
-        setLoading(false);
-        setPost(post);
-        return post;
-      })
-      .catch(({response}) => {
-        setLoading(false);
-        setError(response.data.message);
-      });
-  }
-
-  const createPost = () => {
-    setLoading(true)
-    API.post('api', '/posts', {body: post})
-      .then(({post}) => {
-        setLoading(false);
-        dispatch(createdPost(post));
-        history.push(`/post/${post.id}`);
-      })
-      .catch(({response}) => {
-        setLoading(false);
-        setError(response.data.message);
-      })
-  }
-
-  const updatePost = () => {
-    setLoading(true)
-    const {title, body} = post;
-    return API.put('api', `/posts/${postId}`, {body: {title, body}})
-      .then(({post}) => {
-        setLoading(false);
-        dispatch(updatedPost(post));
-        history.push(`/post/${post.id}`);
-      })
-      .catch(({response}) => {
-        setLoading(false);
-        setError(response.data.message);
-      })
-  }
+  const submitForm = () => dispatch(editMode ? updatePost(postId, post) : createPost(post));
 
   useEffect(() => {
-    if (editMode) {
-      items.has(postId) ? setPost(items.get(postId)) : fetchPost();
-    }
+    if (postUpdated) history.push(`/post/${postId}`);
+  }, [postUpdated, postId, history]);
+
+  useEffect(() => {
+    if (editMode) dispatch(getPost(postId));
   }, []); // eslint-disable-line
+
+  useEffect(() => {
+    if (statePost) setPost(statePost);
+  }, [statePost]);
 
   if (loading) return <Spinner />;
 
   return (
     <div className={'form-group'}>
-      {errorMsg}
+      {error ? <ErrorMsg msg={error} /> : ''}
       <label>
         <input 
           type="text" 

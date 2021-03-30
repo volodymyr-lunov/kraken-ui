@@ -1,14 +1,14 @@
-import * as constants from '../constants';
+import * as types from '../types';
 
 export const loadedComments = ({postId, parentId, comments}) => ({
-  type: constants.COMMENTS_LOADED,
+  type: types.COMMENTS_LOADED,
   postId,
   parentId,
   comments
 });
 
 export const createdComment = ({postId, comment}) => ({
-  type: constants.COMMENT_CREATED,
+  type: types.COMMENT_CREATED,
   postId,
   comment
 });

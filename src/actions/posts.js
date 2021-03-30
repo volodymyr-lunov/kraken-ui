@@ -1,29 +1,17 @@
-import {
-  POSTS_ERROR, 
-  POSTS_LOADED, 
-  POSTS_LOADING, 
-  POST_CREATED, 
-  POST_DELETED, 
-  POST_UPDATED,
-  POST_LOADED
-} from '../constants';
+import * as types from '../types';
+import * as postsService from '../services/posts-service';
 
-import {API} from 'aws-amplify';
+const error = (dispatch) => ({message}) => dispatch(errorPosts(message));
 
-export const loadPosts = (lastEvaluatedKey) => (dispatch) => {
+export const getPosts = (lastEvaluatedKey) => (dispatch) => {
   dispatch(loadingPosts());
 
-  return API.get('api', `/posts${lastEvaluatedKey ? `?startFromId=${lastEvaluatedKey.id}` : ''}`)
-    .then(({posts}) => ({
-      items: posts.Items,
-      count: posts.Count,
-      lastEvaluatedKey: posts.LastEvaluatedKey
-    }))
+  return postsService.getPosts(lastEvaluatedKey)
     .then((posts) => dispatch(loadedPosts(posts)))
-    .catch(({response, message, ...err}) => dispatch(errorPosts(response && message && err)));
+    .catch(error(dispatch));
 };
 
-export const loadPost = (id) => (dispatch, store) => {
+export const getPost = (id) => (dispatch, store) => {
   dispatch(loadingPosts());
   
   const {posts: {items}} = store();
@@ -31,41 +19,57 @@ export const loadPost = (id) => (dispatch, store) => {
     return dispatch(loadedPost(items.get(id)));
   }
 
-  return API.get('api', `/posts/${id}`)
+  return postsService.getPost(id)
     .then(({post}) => dispatch(loadedPost(post)))
-    .catch(({response, message, ...err}) => dispatch(errorPosts(response && message && err)));
-}
+    .catch(error(dispatch));
+};
+
+export const createPost = (body) => (dispatch) => {
+  dispatch(loadingPosts());
+
+  return postsService.createPost(body)
+    .then(({post}) => dispatch(createdPost(post)))
+    .catch(error(dispatch));
+};
+
+export const updatePost = (postId, body) => (dispatch) => {
+  dispatch(loadingPosts());
+
+  return postsService.updatePost(postId, body)
+    .then(({post}) => dispatch(updatedPost(post)))
+    .catch(error(dispatch));
+};
 
 export const loadingPosts = () => ({
-  type: POSTS_LOADING
+  type: types.POSTS_LOADING
 });
 
 export const errorPosts = (error) => ({
-  type: POSTS_ERROR,
+  type: types.POSTS_ERROR,
   error
 });
 
 export const loadedPosts = (posts) => ({
-  type: POSTS_LOADED,
+  type: types.POSTS_LOADED,
   posts
 });
 
 export const loadedPost = (post) => ({
-  type: POST_LOADED,
+  type: types.POST_LOADED,
   post
 });
 
 export const createdPost = (newPost) => ({
-  type: POST_CREATED,
+  type: types.POST_CREATED,
   newPost
 });
 
 export const updatedPost = (updatedPost) => ({
-  type: POST_UPDATED,
+  type: types.POST_UPDATED,
   updatedPost
 });
 
 export const deletedPost = (id) => ({
-  type: POST_DELETED,
+  type: types.POST_DELETED,
   id
 });

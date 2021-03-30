@@ -14,30 +14,30 @@ const CommentsList = ({postId, parentId}) => {
   const [loaded, setLoaded] = useState(false);
   const {comments} = useSelector(state => ({comments: state.comments.get(postId)?.get(parentId || '') || new Map()}));
 
-  const fetchComments = () => {
-    setLoading(true);
-
-    const url = `/posts/${postId}/comments` + (parentId ? `?parentId=${parentId}` : '');
-
-    return API.get('api', url)
-      .then(({comments}) => ({
-        count: comments.Count,
-        items: comments.Items,
-        scannedCount: comments.ScannedCount
-      }))
-      .then((comments) => dispatch(loadedComments({postId, comments, parentId})))
-      .catch(({response}) => setError(response.data.message))
-      .finally(() => {
-        setLoading(false);
-        setLoaded(true);
-      });
-  };
-
   useEffect(() => {
+    const fetchComments = () => {
+      setLoading(true);
+  
+      const url = `/posts/${postId}/comments` + (parentId ? `?parentId=${parentId}` : '');
+  
+      return API.get('api', url)
+        .then(({comments}) => ({
+          count: comments.Count,
+          items: comments.Items,
+          scannedCount: comments.ScannedCount
+        }))
+        .then((comments) => dispatch(loadedComments({postId, comments, parentId})))
+        .catch(({response}) => setError(response.data.message))
+        .finally(() => {
+          setLoading(false);
+          setLoaded(true);
+        });
+    };
+    
     if (!loading && !loaded && !comments.size) {
       fetchComments();
     }
-  });
+  }, [postId, parentId]);
 
   if (error) return <ErrorMsg msg={error} />
   if (loading) return <Spinner />

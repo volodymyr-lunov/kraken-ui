@@ -8,8 +8,7 @@ import ErrorMsg from '../components/ErrorMsg';
 
 const Home = () => {
   const {
-    items, 
-    needsUpdate,
+    posts,
     lastEvaluatedKey,
     loading,
     error
@@ -19,12 +18,12 @@ const Home = () => {
   const loadMore = () => lastEvaluatedKey.id && dispatch(getPosts(lastEvaluatedKey.id));
 
   useEffect(() => {
-    needsUpdate && dispatch(getPosts());
+    if (!posts.size) dispatch(getPosts());
   }, []); // eslint-disable-line
   
   if (loading) return <Spinner />;
   if (error) return <ErrorMsg msg={error} />;
-  if (!items.size) return <h3>No content</h3>
+  if (!posts.size) return <h3>No content</h3>
 
   const mayBeLoadMore = lastEvaluatedKey && lastEvaluatedKey.id;
   const loadMoreBtn = <button className={'btn'} onClick={(loadMore)}>Load More</button>;
@@ -32,7 +31,7 @@ const Home = () => {
   return (
     <Fragment>
       <div className={'posts-list'}>
-        {mapMap(items, (post) => <Post data={post} preview={true} key={post.id} />)}
+        {mapMap(posts, (post) => <Post data={post} preview={true} key={post.id} />)}
       </div>
       {mayBeLoadMore && loadMoreBtn}
     </Fragment>

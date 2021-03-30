@@ -1,17 +1,19 @@
 import * as types from '../types';
 
 const defaultState = {
-  items: new Map(),
+  posts: new Map(),
   count: 10,
   lastEvaluatedKey: null,
+
   loading: false,
   error: null,
-  needsUpdate: true,
+  
   post: null,
-  postUpdated: false,
+  postBeenUpdated: false,
+  postBeenCreated: false
 };
 
-const posts = (state = defaultState, action) => {
+export default (state = defaultState, action) => {
   switch (action.type) {
     case types.POSTS_LOADING:
       return {
@@ -28,14 +30,13 @@ const posts = (state = defaultState, action) => {
 
     case types.POSTS_LOADED:
       {
-        const items = new Map(state.items.entries());
-        action.posts.items.forEach(item => items.set(item.id, item));
+        const posts = new Map(state.posts.entries());
+        action.posts.posts.forEach(item => posts.set(item.id, item));
 
         return {
           ...state,
+          posts,
           loading: false,
-          items,
-          needsUpdate: false,
           count: action.posts.count,
           lastEvaluatedKey: action.posts.lastEvaluatedKey
         };
@@ -44,45 +45,49 @@ const posts = (state = defaultState, action) => {
     case types.POST_LOADED:
       return {
         ...state,
+        currentPost: action.currentPost,
         loading: false,
-        post: action.post,
-        postUpdated: false
+        postBeenUpdated: false,
+        postBeenCreated: false,
       }
 
     case types.POST_CREATED:
       {
-        const items = new Map(state.items.entries());
-        items.set(action.newPost.id, action.newPost);
+        const posts = new Map(state.posts.entries());
+        posts.set(action.createdPost.id, action.createdPost);
 
         return {
           ...state,
-          items,
-          lastEvaluatedKey: action.newPost.id,
-          loading: false
+          posts,
+          lastEvaluatedKey: action.createdPost.id,
+          loading: false,
+          postBeenCreated: true,
+          postBeenUpdated: false
         }
       }
 
     case types.POST_UPDATED:
       {
-        const items = new Map(state.items.entries());
-        items.set(action.updatedPost.id, action.updatedPost);
+        const posts = new Map(state.posts.entries());
+        posts.set(action.updatedPost.id, action.updatedPost);
 
         return {
           ...state,
-          items,
+          posts,
           loading: false,
-          postUpdated: true
+          postBeenCreated: false,
+          postBeenUpdated: true
         }
       }
 
     case types.POST_DELETED:
       {
-        const items = new Map(state.items.entries());
-        items.delete(action.id);
+        const posts = new Map(state.posts.entries());
+        posts.delete(action.id);
 
         return {
           ...state,
-          items
+          posts
         }
       }
 
@@ -90,5 +95,3 @@ const posts = (state = defaultState, action) => {
       return state;
   }
 };
-
-export default posts;

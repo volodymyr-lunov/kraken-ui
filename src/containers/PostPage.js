@@ -10,7 +10,7 @@ import CommentsForm from './CommentsForm';
 const PostPage = ({match}) => {
   const {postId} = match.params;
   const dispatch = useDispatch();
-  const {post, error, loading} = useSelector(state => state.posts);
+  const {currentPost, error, loading} = useSelector(state => state.posts);
 
   useEffect(() => {
     dispatch(getPost(postId));
@@ -18,10 +18,10 @@ const PostPage = ({match}) => {
 
   if (error) return <ErrorMsg msg={error} />;
   if (loading) return <Spinner />;
-  if (post) {
+  if (currentPost) {
     return (
       <Fragment>
-        <Post data={post} />
+        <Post data={currentPost} />
         <CommentsForm postId={postId}/>
         <CommentsList postId={postId} />
       </Fragment>

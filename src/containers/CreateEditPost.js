@@ -10,23 +10,23 @@ const CreateEditPost = () => {
   const history = useHistory();
   const {postId} = useParams();
   const editMode = !!postId;
-  const {post: statePost, error, loading, postUpdated} = useSelector(state => state.posts);
+  const {currentPost, error, loading, postBeenUpdated} = useSelector(state => state.posts);
   const [post, setPost] = useState({ title: '', body: '' });
 
   const validateForm = () => post.title.length && post.body.length;
   const submitForm = () => dispatch(editMode ? updatePost(postId, post) : createPost(post));
 
   useEffect(() => {
-    if (postUpdated) history.push(`/post/${postId}`);
-  }, [postUpdated, postId, history]);
+    if (postBeenUpdated) history.push(`/post/${postId}`);
+  }, [postBeenUpdated, postId, history]);
 
   useEffect(() => {
     if (editMode) dispatch(getPost(postId));
   }, []); // eslint-disable-line
 
   useEffect(() => {
-    if (statePost) setPost(statePost);
-  }, [statePost]);
+    if (currentPost) setPost(currentPost);
+  }, [currentPost]);
 
   if (loading) return <Spinner />;
 

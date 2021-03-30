@@ -14,9 +14,9 @@ export const getPosts = (lastEvaluatedKey) => (dispatch) => {
 export const getPost = (id) => (dispatch, store) => {
   dispatch(loadingPosts());
   
-  const {posts: {items}} = store();
-  if (items.has(id)) {
-    return dispatch(loadedPost(items.get(id)));
+  const {posts: {posts}} = store();
+  if (posts.has(id)) {
+    return dispatch(loadedPost(posts.get(id)));
   }
 
   return postsService.getPost(id)
@@ -56,17 +56,17 @@ export const loadedPosts = (posts) => ({
 
 export const loadedPost = (post) => ({
   type: types.POST_LOADED,
-  post
+  currentPost: post
 });
 
-export const createdPost = (newPost) => ({
+export const createdPost = (post) => ({
   type: types.POST_CREATED,
-  newPost
+  createdPost: post
 });
 
-export const updatedPost = (updatedPost) => ({
+export const updatedPost = (post) => ({
   type: types.POST_UPDATED,
-  updatedPost
+  updatedPostpost: post
 });
 
 export const deletedPost = (id) => ({

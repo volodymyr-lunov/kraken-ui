@@ -3,7 +3,7 @@ import {API} from 'aws-amplify';
 export const getPosts = (lastEvaluatedKey) => API
   .get('api', `/posts${lastEvaluatedKey ? `?startFromId=${lastEvaluatedKey.id}` : ''}`)
   .then(({posts}) => ({
-    items: posts.Items,
+    posts: posts.Items,
     count: posts.Count,
     lastEvaluatedKey: posts.LastEvaluatedKey
   }))

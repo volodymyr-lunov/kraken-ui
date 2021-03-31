@@ -23,3 +23,5 @@ export const updatePost = (postId, {title, body}) => API.put('api', `/posts/${po
     body
   }
 });
+
+export const deletePost = (id) => API.del('api', `/posts/${id}`, { response: false });

@@ -90,7 +90,8 @@ export default (state = defaultState, action) => {
         return {
           ...state,
           posts,
-          currentPost: null
+          currentPost: null,
+          loading: false,
         }
       }
 

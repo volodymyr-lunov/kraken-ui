@@ -43,6 +43,14 @@ export const updatePost = (postId, body) => (dispatch) => {
     .catch(error(dispatch));
 };
 
+export const deletePost = (id) => (dispatch) => {
+  dispatch(loadingPosts());
+
+  return postsService.deletePost(id)
+    .then(() => dispatch(deletedPost(id)))
+    .catch(error(dispatch));
+};
+
 export const loadingPosts = () => ({
   type: types.POSTS_LOADING
 });

@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux';
 import {mapMap} from '../lib/utils';
 import {fetchComments} from '../actions/comments';
@@ -26,6 +27,11 @@ const CommentsList = ({postId, parentId}) => {
       }
     </ul>
   )
+};
+
+CommentsList.propTypes = {
+  postId: PropTypes.number,
+  parentId: PropTypes.number
 };
 
 export default CommentsList;

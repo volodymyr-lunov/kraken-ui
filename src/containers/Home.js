@@ -20,7 +20,7 @@ const Home = () => {
   useEffect(() => {
     if (!posts.size) dispatch(fetchPosts());
   }, []); // eslint-disable-line
-  
+
   if (loading) return <Spinner />;
   if (error) return <ErrorMsg msg={error} />;
   if (!posts.size) return <h3>No content</h3>

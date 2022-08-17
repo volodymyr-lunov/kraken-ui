@@ -21,7 +21,9 @@ const SignIn = () => {
   const submitUser = async () => {
     setLoading(true);
     Auth.signIn(email, password) 
-      .then(() => {
+      .then((all) => {
+        console.log({all})
+
         userHasAuthenticated(true);
         setLoading(false);
         history.push(getBackUrl());

@@ -19,7 +19,7 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         loading: true
-      };
+      };  
     
     case types.POSTS_ERROR:
       return {

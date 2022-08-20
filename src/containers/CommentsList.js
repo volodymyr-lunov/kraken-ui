@@ -9,7 +9,9 @@ import Comment from '../components/Comment';
 
 const CommentsList = ({postId, parentId}) => {
   const dispatch = useDispatch();
-  const {comments, loading, error} = useSelector(({comments: { comments }}) => ({comments: comments.get(postId)?.get(parentId || '') || new Map()}));
+  const {comments, loading, error} = useSelector(({comments: { comments }}) => ({
+    comments: comments.get(postId)?.get(parentId || '') || new Map()
+  }));
 
   useEffect(() => {
     if (!comments.size) dispatch(fetchComments({postId, parentId}))
@@ -30,8 +32,8 @@ const CommentsList = ({postId, parentId}) => {
 };
 
 CommentsList.propTypes = {
-  postId: PropTypes.number,
-  parentId: PropTypes.number
+  postId: PropTypes.string,
+  parentId: PropTypes.string
 };
 
 export default CommentsList;

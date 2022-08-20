@@ -2,7 +2,6 @@ import React, {useEffect, Fragment} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {mapMap} from '../lib/utils';
 import {fetchPosts} from '../actions/posts';
-import {getTest} from '../services/test';
 import Post from '../components/Post';
 import Spinner from '../components/Spinner';
 import ErrorMsg from '../components/ErrorMsg';
@@ -19,8 +18,6 @@ const Home = () => {
   const loadMore = () => lastEvaluatedKey && dispatch(fetchPosts(lastEvaluatedKey));
 
   useEffect(() => {
-    getTest()
-
     if (!posts.size) dispatch(fetchPosts());
   }, []); // eslint-disable-line
 
